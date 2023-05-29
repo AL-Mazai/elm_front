@@ -104,7 +104,7 @@ export default {
 .title-font{
     margin-top: 3vw;
     color: white;
-    font-size: 6vw;
+    font-size: 4.8vw;
 }
 
 .login-btn {
