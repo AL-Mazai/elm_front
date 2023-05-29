@@ -2,15 +2,22 @@
     <div class="register-container">
         <!--表单部分-->
         <div class="title"><p class="title-font">用户注册</p></div>
-        <el-form :model="form" :rules="rules" ref="form" label-width="80px" style="margin-right: 10vw;">
+        <el-form :model="registerForm" :rules="rules" ref="registerForm" label-width="80px" style="margin-right: 10vw;">
             <el-form-item label="手机" prop="phone">
-                <el-input v-model="form.phone" type="tel" placeholder="请输入手机号码"></el-input>
+                <el-input v-model="registerForm.phone" type="tel" placeholder="请输入手机号码"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
+                <el-input v-model="registerForm.password" type="password" placeholder="请输入密码" show-password></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPassword">
+                <el-input v-model="registerForm.checkPassword" type="password" placeholder="请确认密码" show-password></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="sex">
+                <el-radio v-model="registerForm.sex" label="1">男</el-radio>
+                <el-radio v-model="registerForm.sex" label="0">女</el-radio>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="login-btn" @click="$router.push('/login')">注册</el-button>
+                <el-button type="primary" class="login-btn" @click="register('registerForm')">注册</el-button>
             </el-form-item>
         </el-form>
 
@@ -28,9 +35,11 @@ export default {
     components: {Footer},
     data() {
         return {
-            form: {
+            registerForm: {
                 phone: '',
-                password: ''
+                password: '',
+                checkPassword:'',
+                sex:'',
             },
             rules: {
                 phone: [
@@ -39,16 +48,29 @@ export default {
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' }
-                ]
+                ],
+                checkPassword: [
+                    { required: true, message: '请确认密码', trigger: 'blur' }
+                ],
+                sex: [
+                    { required: true, message: '性别', trigger: 'blur' }
+                ],
             }
         };
     },
     methods: {
-        submitForm(formName) {
+        //注册
+        register(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    // 在这里处理登录逻辑
-                    console.log('表单验证通过');
+                    if(this.registerForm.password === this.registerForm.checkPassword){
+                        // 在这里处理注册逻辑
+                        console.log('表单验证通过');
+                        console.log(this.form)
+                        this.$router.push('/login')
+                    }else{
+                        this.$message.error("两次密码不一致")
+                    }
                 } else {
                     console.log('表单验证失败');
                     return false;
@@ -68,7 +90,7 @@ export default {
 
 .title {
     width: 100%;
-    height: 16vw;
+    height: 12vw;
 
     text-align: center;
 
@@ -80,9 +102,9 @@ export default {
 }
 
 .title-font{
-    margin-top: 4vw;
+    margin-top: 3vw;
     color: white;
-    font-size: 8vw;
+    font-size: 6vw;
 }
 
 .login-btn {

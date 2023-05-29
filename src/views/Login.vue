@@ -2,16 +2,16 @@
     <div class="login-container">
         <!--表单部分-->
         <div class="title"><p class="title-font">用户登录</p></div>
-        <el-form :model="form" :rules="rules" ref="form" label-width="80px" style="margin-right: 10vw;">
+        <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px" style="margin-right: 10vw;">
             <el-form-item label="手机" prop="phone">
-                <el-input v-model="form.phone" type="tel" placeholder="请输入手机号码"></el-input>
+                <el-input v-model="loginForm.phone" type="tel" placeholder="请输入手机号码"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
+                <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="login-btn" @click="submitForm('form')">登录</el-button>
-                <el-button type="primary" class="login-btn" @click="$router.push('/register')">注册</el-button>
+                <el-button type="primary" class="login-btn" @click="login('loginForm')">登录</el-button>
+                <el-button type="primary" class="login-btn" @click="$router.push('/register')">去注册</el-button>
             </el-form-item>
         </el-form>
 
@@ -29,7 +29,7 @@ export default {
     components: {Footer},
     data() {
         return {
-            form: {
+            loginForm: {
                 phone: '',
                 password: ''
             },
@@ -45,7 +45,7 @@ export default {
         };
     },
     methods: {
-        submitForm(formName) {
+        login(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     // 在这里处理登录逻辑
@@ -69,7 +69,7 @@ export default {
 
 .title {
     width: 100%;
-    height: 16vw;
+    height: 12vw;
 
     text-align: center;
 
@@ -81,9 +81,9 @@ export default {
 }
 
 .title-font{
-    margin-top: 4vw;
+    margin-top: 3vw;
     color: white;
-    font-size: 8vw;
+    font-size: 6vw;
 }
 
 .login-btn {

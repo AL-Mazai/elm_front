@@ -14,7 +14,7 @@
         <div class="search">
             <div class="search-input">
                 <input type="text" placeholder="请输入要查询的商品...">
-                <button type="submit" onclick="search()">搜索</button>
+                <button type="submit" @click="searchPro()">搜索</button>
             </div>
         </div>
 
@@ -347,6 +347,11 @@ export default {
     name: "index",
     components: {
         Footer
+    },
+    methods:{
+        searchPro(){
+            alert("hello")
+        }
     }
 }
 </script>
