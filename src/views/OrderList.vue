@@ -1,7 +1,5 @@
 <template>
     <div class="wrapper">
-
-
         <!-- header部分 -->
         <header>
             <p>我的订单</p>
@@ -94,7 +92,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div>
                 <div class="order-info">
