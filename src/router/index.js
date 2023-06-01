@@ -19,6 +19,21 @@ const routes = [
         component: () => import("../views/BusinessInfo")
     },
     {
+        path: "/order",
+        name: "Order",
+        component: () => import("../views/Order")
+    },
+    {
+        path: "/orderList",
+        name: "OrderList",
+        component: () => import("../views/OrderList")
+    },
+    {
+        path: "/payment",
+        name: "Payment",
+        component: () => import("../views/Payment")
+    },
+    {
         path: "/login",
         name: "Login",
         component: () => import("../views/Login")

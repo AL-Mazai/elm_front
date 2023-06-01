@@ -172,7 +172,7 @@
                 </div>
                 -->
                 <!-- 达到起送费 -->
-                <div class="cart-right-item" onclick="location.href='order.html'">
+                <div class="cart-right-item" @click="$router.push('/order')">
                     去结算
                 </div>
             </div>
@@ -375,13 +375,13 @@ export default {
 }
 
 .wrapper .cart .cart-left .cart-left-info p:first-child {
-    font-size: 4.5vw;
+    font-size: 4vw;
     color: #fff;
     margin-top: 1vw;
 }
 
 .wrapper .cart .cart-left .cart-left-info p:last-child {
-    font-size: 2.8vw;
+    font-size: 1.8vw;
     color: #AAA;
 }
 
