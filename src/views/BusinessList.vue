@@ -2,102 +2,24 @@
     <div class="wrapper">
         <!-- header部分 -->
         <header>
-            <p>商家列表</p>
+            <div>商家列表</div>
+            <div style="margin-left: 5vw">
+                <el-button type="success" @click="addBusiness">增加</el-button>
+            </div>
         </header>
 
-        <!-- 商家列表部分 -->
+        <!--商家列表-->
         <div class="business">
-            <li @click="$router.push('/businessInfo')">
+            <li v-for="business in BusinessInfos" :key="business.businessId">
                 <div class="business-img">
-                    <img src="../assets/img//sj01.png">
-                    <div class="business-img-quantity">3</div>
+                    <img :src=business.logoUrl @click="$router.push('/businessInfo')">
+                    <div class="business-img-quantity">{{ business.other }}</div>
                 </div>
                 <div class="business-info">
-                    <h3>万家饺子（软件园E18店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>各种饺子炒菜</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj02.png">
-                    <div class="business-img-quantity">2</div>
-                </div>
-                <div class="business-info">
-                    <h3>小锅饭豆腐馆（全运店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>特色美食</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj03.png">
-                    <div class="business-img-quantity">1</div>
-                </div>
-                <div class="business-info">
-                    <h3>麦当劳麦乐送（全运路店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>汉堡薯条</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj04.png">
-                </div>
-                <div class="business-info">
-                    <h3>米村拌饭（浑南店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>各种炒菜拌饭</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj05.png">
-                </div>
-                <div class="business-info">
-                    <h3>申记串道（中海康城店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>烤串炸串</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj06.png">
-                </div>
-                <div class="business-info">
-                    <h3>半亩良田排骨米饭</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>排骨米饭套餐</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj07.png">
-                </div>
-                <div class="business-info">
-                    <h3>茶兮鲜果饮品（国际软件园店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>甜品饮品</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj08.png">
-                </div>
-                <div class="business-info">
-                    <h3>唯一水果捞（软件园E18店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>新鲜水果</p>
-                </div>
-            </li>
-            <li @click="$router.push('/businessInfo')">
-                <div class="business-img">
-                    <img src="../assets/img//sj09.png">
-                </div>
-                <div class="business-info">
-                    <h3>满园春饼（全运路店）</h3>
-                    <p>&#165;15起送 | &#165;3配送</p>
-                    <p>各种春饼</p>
+                    <h3>{{ business.name }}</h3>
+                    <p>&#165;{{ business.starPrice }}起送 | &#165;{{ business.deliveryPrice }}配送</p>
+                    <p>{{ business.businessExplain }}</p>
+                    <el-button  size="mini" type="danger" @click="deleteBusiness(business.businessId)" >删除</el-button>
                 </div>
             </li>
         </div>
@@ -107,6 +29,44 @@
 
         <!-- 底部菜单部分 -->
         <Footer></Footer>
+
+        <!--增加工具对话框-->
+        <el-dialog
+            title="添加商家"
+            :visible.sync="addDialogVisible"
+            width="95%"
+            :close-on-click-modal="false">
+            <el-form :model="businessForm" style="width: 80%" label-width="60px">
+                <el-form-item label="名称">
+                    <el-input v-model="businessForm.name" placeholder="请输入名称"></el-input>
+                </el-form-item>
+                <el-form-item label="起送费" >
+                    <el-input v-model="businessForm.starPrice" placeholder="请输入起送费"></el-input>
+                </el-form-item>
+                <el-form-item label="配送费">
+                    <el-input v-model="businessForm.deliveryPrice" placeholder="请输入配送费"></el-input>
+                </el-form-item>
+                <el-form-item label="介绍">
+                    <el-input v-model="businessForm.businessExplain" placeholder="请输入介绍"></el-input>
+                </el-form-item>
+                <el-form-item label="logo">
+                    <el-upload
+                        class="avatar-uploader"
+                        action="http://localhost:8085/qiniu/image"
+                        :show-file-list="false"
+                        :on-success="handleLogoSuccess"
+                        :before-upload="beforeLogoUpload">
+                        <img v-if="imageUrl != ''" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitForm()">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -116,10 +76,106 @@ import Footer from "@/components/Footer";
 export default {
     name: "BusinessList",
     components: {Footer},
+    data() {
+        return {
+            businessForm: {
+                name: '',
+                starPrice: '',
+                deliveryPrice: '',
+                businessExplain: '',
+                logoUrl: '',
+                other: Math.floor(Math.random() * 5) + 1,
+            },
+            addDialogVisible: false,
+            imageUrl: '',
+            BusinessInfos: [],
+        }
+    },
+    created() {
+        this.getAllBusinessInfo()
+    },
+    methods: {
+        //增加商家
+        addBusiness() {
+            this.addDialogVisible = true
+        },
+        //图片回显
+        handleLogoSuccess(res) {
+            this.imageUrl = res
+        },
+        //图片上传大小限制
+        beforeLogoUpload(file) {
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isLt2M;
+        },
+        //提交表单
+        submitForm() {
+            this.businessForm.logoUrl = this.imageUrl
+            console.log(this.businessForm)
+            this.axios.post("http://localhost:8085/businessInfo/addBusinessInfo", this.businessForm).then((res) => {
+                this.$message.success(res.data)
+                this.addDialogVisible = false
+                this.businessForm = {}
+                this.getAllBusinessInfo()
+            }).catch((err) => {
+                this.$message.error(err.response.data)
+            });
+        },
+        //获取商家列表
+        getAllBusinessInfo() {
+            this.axios.get("http://localhost:8085/businessInfo/getAllBusinessInfo").then((res) => {
+                this.BusinessInfos = res.data
+            })
+        },
+        //删除商家
+        deleteBusiness(id){
+            this.axios.delete("http://localhost:8085/businessInfo/deleteBusiness",{
+                params:{
+                    businessId:id
+                }
+            }).then(res => {
+                this.$message.success(res.data)
+                this.getAllBusinessInfo()
+            })
+        },
+    }
 }
 </script>
 
 <style scoped>
+
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+
+    border: 1px solid #8c939d;
+}
+
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+
 /****************** 总容器 ******************/
 .wrapper {
     width: 100%;
