@@ -1,7 +1,9 @@
 <template>
     <div class="login-container">
         <!--表单部分-->
-        <div class="title"><p class="title-font">用户登录</p></div>
+        <div class="title">
+            <p class="title-font">用户登录</p>
+        </div>
         <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px" style="margin-right: 10vw;">
             <el-form-item label="手机" prop="phone">
                 <el-input v-model="loginForm.phone" type="tel" placeholder="请输入手机号码"></el-input>
