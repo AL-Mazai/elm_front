@@ -242,51 +242,6 @@
                     </div>
                 </div>
             </li>
-            <li>
-                <img src="../assets/img/sj05.png">
-                <div class="business-info">
-                    <div class="business-info-h">
-                        <h3>申记串道（中海康城店）</h3>
-                        <div class="business-info-like">&#8226;</div>
-                    </div>
-                    <div class="business-info-star">
-                        <div class="business-info-star-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <p>4.9 月售345单</p>
-                        </div>
-                        <div class="business-info-star-right">
-                            云大专送
-                        </div>
-                    </div>
-                    <div class="business-info-delivery">
-                        <p>&#165;15起送 | &#165;3配送</p>
-                        <p>3.22km | 30分钟</p>
-                    </div>
-                    <div class="business-info-explain">
-                        <div>各种饺子</div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">新</div>
-                            <p>饿了么新用户首单立减9元</p>
-                        </div>
-                        <div class="business-info-promotion-right">
-                            <p>2个活动</p>
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">特</div>
-                            <p>特价商品5元起</p>
-                        </div>
-                    </div>
-                </div>
-            </li>
         </div>
 
         <!-- 空白div -->
