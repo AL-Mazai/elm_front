@@ -20,45 +20,9 @@
 
         <!-- 点餐 -->
         <div class="foodType">
-            <div class="foodTypeItem" @click="$router.push('/businessList')">
-                <img src="../assets/img/dcfl01.png">
-                <p>美食</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl02.png">
-                <p>早餐</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl03.png">
-                <p>跑腿代购</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl04.png">
-                <p>汉堡披萨</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl05.png">
-                <p>甜品饮品</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl06.png">
-                <p>速食简餐</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl07.png">
-                <p>地方小吃</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl08.png">
-                <p>米粉面馆</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl09.png">
-                <p>包子粥铺</p>
-            </div>
-            <div class="foodTypeItem">
-                <img src="../assets/img/dcfl10.png">
-                <p>炸鸡炸串</p>
+            <div  v-for="food in foodInfos" :key="food.foodId" class="foodTypeItem" @click="$router.push('/businessList')">
+                <img :src=food.logoUrl>
+                <p>{{ food.foodName }}</p>
             </div>
         </div>
 
@@ -342,10 +306,25 @@ export default {
     components: {
         Footer
     },
+    data(){
+        return{
+            foodInfos: [],
+        }
+    },
+    created() {
+        this.getAllFoodInfo()
+    },
     methods:{
         searchPro(){
             alert("hello")
-        }
+        },
+        //获取食物类型列表
+        getAllFoodInfo() {
+            this.axios.get("http://localhost:8085/foodList/getAllFood").then((res) => {
+                console.log(res.data)
+                this.foodInfos = res.data
+            })
+        },
     }
 }
 </script>
