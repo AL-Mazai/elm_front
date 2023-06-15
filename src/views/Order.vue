@@ -10,10 +10,10 @@
         <div class="order-info">
             <h5>订单配送至：</h5>
             <div class="order-info-address">
-                <p>沈阳市浑南区智慧四街1-121号</p>
+                <p>云南大学楸苑三栋</p>
                 <i class="fa fa-angle-right"></i>
             </div>
-            <p>zzw先生 13656785432</p>
+            <p>zzw 先生 15877712345</p>
         </div>
 
         <h3>万家饺子（软件园E18店）</h3>

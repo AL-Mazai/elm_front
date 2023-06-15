@@ -1,11 +1,11 @@
 <template>
     <div class="user-info">
         <div class="user-profile" style="background-color: #0097FF">
-            <img src="../assets/img/userImg/yhtx02.png" alt="头像" class="avatar" />
+            <img src="../assets/img/userImg/avatar.png" alt="头像" class="avatar" />
             <h1 style="color: white">
                 {{ userInfo.name }}
             </h1>
-            <h4 style="color: white;margin-left: 70px">
+            <h4 style="color: white;margin-left: 50px;margin-top: 30px">
                 <i class="el-icon-phone"/>{{ userInfo.phoneNumber }}
             </h4>
         </div>
@@ -50,7 +50,7 @@ export default {
             userInfo: {
                 name: 'zzw',
                 phoneNumber: '15877712345',
-                avatar: "../assets/img/sj01.png",
+                avatar: "../assets/img/avatar.png",
             },
             wallet: {
                 balance: 1000,
@@ -76,6 +76,7 @@ export default {
 .avatar {
     width: 100px;
     height: 100px;
+
     border-radius: 50%;
     margin-right: 20px;
 }

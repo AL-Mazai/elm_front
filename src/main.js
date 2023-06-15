@@ -8,9 +8,6 @@ import 'normalize.css/normalize.css'
 //font-awesome组件
 import 'font-awesome/css/font-awesome.min.css';
 
-//配置全局CSS
-import CSS from './assets/css/global.css'
-Vue.use(CSS)
 
 //element-ui组件
 import ElementUI from "element-ui";
