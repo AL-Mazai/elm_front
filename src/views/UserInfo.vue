@@ -1,14 +1,23 @@
 <template>
     <div class="user-info">
-        <div class="user-profile" style="background-color: #0097FF">
-            <img src="../assets/img/userImg/avatar.png" alt="头像" class="avatar" />
-            <h2 style="color: white">
-                {{ userInfo.username }}
-            </h2>
-            <h4 style="color: white;margin-left: 50px;margin-top: 30px">
-                <i class="el-icon-phone"/>{{ userInfo.phone }}
-            </h4>
+        <div v-if="isLogin" class="user-profile" style="background-color: #0097FF">
+            <img :src="userInfo.userimg" alt="头像" class="avatar" @error="handleAvatarError" />
+            <div style="width:100%;">
+                <div style="width:100%;color: white;font-size: 21px;">
+                    {{ userInfo.username }}
+                </div>
+                <div style="width:100%;color: white;font-size: 18px;margin-top: 10px;">
+                    {{ formatPhoneNumber(userInfo.phone) }}<i class="el-icon-edit" style="margin-left: 5px"/>
+                </div>
+            </div>
         </div>
+        <div v-else class="user-profile" style="background-color: #0097FF">
+            <img src="../assets/img/userImg/avatar.png" alt="头像" class="avatar" />
+            <h2 style="color: white" @click="$router.push('/login')">
+                登录
+            </h2>
+        </div>
+
         <div class="info-section">
             <div class="info-item" @click="$router.push('/address')">
                 <i class="el-icon-location"></i> <p>我的地址</p>
@@ -23,7 +32,6 @@
                 <i class="el-icon-user"></i> <p>商家入驻</p>
             </div>
         </div>
-
         <div class="wallet-section">
             <span style="font-size: 20px;font-weight: bold">我的钱包</span>
             <span style="margin-left: 50vw">进入钱包<i class="el-icon-arrow-right"/></span>
@@ -39,6 +47,7 @@
 
 <script>
 import Footer from "@/components/Footer";
+// import {userInfo} from "@/api/user";
 
 export default {
     name:'UserInfo',
@@ -48,18 +57,37 @@ export default {
     data() {
         return {
             userInfo: {},
+            isLogin: false,
+            //固定头像链接
+            defaultAvatar: "http://s0k2fu3j0.hn-bkt.clouddn.com/image/1.png"
         };
     },
     created() {
         this.getUserInfo()
     },
     methods:{
+        //获取用户信息
         getUserInfo(){
-            let userId = 3
-            this.axios.get(`http://localhost:8081/user/${userId}`).then(res => {
-                // console.log(res.data)
-                this.userInfo = res.data
-            })
+            if(localStorage.getItem("userInfo")){
+                this.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+                this.isLogin = true
+            }else{
+                this.$message.warning({
+                    message: "请先登录",
+                    duration: 800
+                })
+            }
+        },
+        //头像加载失败
+        handleAvatarError(){
+            this.userInfo.userimg = this.defaultAvatar
+        },
+        //将电话号码一部分替换为*
+        formatPhoneNumber(phone) {
+            const visibleDigits1 = phone.substring(0, 3); // 前6位可见
+            const visibleDigits2 = phone.substring(8, 10); // 前6位可见
+            const hiddenDigits = phone.substring(4, 7).replace(/\d/g, "*"); // 后面的数字替换为 *
+            return `${visibleDigits1}${hiddenDigits}${visibleDigits2}`;
         }
     }
 };

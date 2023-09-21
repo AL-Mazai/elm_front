@@ -14,3 +14,10 @@ export function userLogin(username, password) {
         }
     })
 }
+// 获取用户信息
+export function userInfo() {
+    return request({
+        url: '/user/getUserInfo',
+        method: 'get',
+    })
+}

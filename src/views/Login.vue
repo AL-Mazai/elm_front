@@ -66,19 +66,17 @@ export default {
                         const { username, password } = this.loginForm;
                         //后端登录认证
                         userLogin(username, password).then((response) => {
-                            console.log(response)
+                            // console.log(response)
                             // 登录成功记录token和用户信息，登录失败给对应提示
                             setToken(response.token)
                             // 存储用户信息
                             localStorage.setItem("userInfo",JSON.stringify(response.userInfoVo))
 
-                            if(localStorage.getItem('logUrl')){
-                                this.$router.push({path:localStorage.getItem('logUrl')});
-                            }else{
-                                this.$router.push({path:'/'});
-                            }
-
-                            this.$message.success("登录成功")
+                            this.$router.push({path:'/'});
+                            this.$message.success({
+                                message: "登录成功",
+                                duration: 800
+                            })
                         })
                     } else if (this.loginMethod === "phone") {// 处理手机号码登录逻辑
                         const { phone, password } = this.loginForm;

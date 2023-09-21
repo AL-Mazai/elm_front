@@ -6,17 +6,17 @@ const routes = [
     {
         path: "/",
         name: "Index",
-        component: () => import("../views/Index")
+        component: () => import("../views/Index"),
     },
     {
         path: "/businessList",
         name: "BusinessList",
-        component: () => import("../views/BusinessList")
+        component: () => import("../views/BusinessList"),
     },
     {
         path: "/businessInfo",
         name: "BusinessInfo",
-        component: () => import("../views/BusinessInfo")
+        component: () => import("../views/BusinessInfo"),
     },
     {
         path: "/order",
@@ -26,17 +26,31 @@ const routes = [
     {
         path: "/orderList",
         name: "OrderList",
-        component: () => import("../views/OrderList")
+        component: () => import("../views/OrderList"),
+        meta:{
+            isLogin: true
+        }
     },
     {
         path: "/payment",
         name: "Payment",
-        component: () => import("../views/Payment")
+        component: () => import("../views/Payment"),
+        meta:{
+            isLogin: true
+        }
     },
     {
         path: "/userInfo",
         name: "UserInfo",
-        component: () => import("../views/UserInfo")
+        component: () => import("../views/UserInfo"),
+    },
+    {
+        path: "/address",
+        name: "Address",
+        component: () => import("../views/Address"),
+        meta: {
+            isLogin: true
+        }
     },
     {
         path: "/discover",
@@ -46,18 +60,14 @@ const routes = [
     {
         path: "/login",
         name: "Login",
-        component: () => import("../views/Login")
+        component: () => import("../views/Login"),
     },
     {
         path: "/register",
         name: "Register",
-        component: () => import("../views/Register")
+        component: () => import("../views/Register"),
     },
-    {
-        path: "/address",
-        name: "Address",
-        component: () => import("../views/Address")
-    }
+
 ];
 
 const router = new VueRouter({
