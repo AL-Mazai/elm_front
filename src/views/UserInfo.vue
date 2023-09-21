@@ -32,9 +32,10 @@
                 <i class="el-icon-user"></i> <p>商家入驻</p>
             </div>
         </div>
+
         <div class="wallet-section">
             <span style="font-size: 20px;font-weight: bold">我的钱包</span>
-            <span style="margin-left: 50vw">进入钱包<i class="el-icon-arrow-right"/></span>
+            <span style="margin-left: 50vw" @click="$router.push('/money')">进入钱包<i class="el-icon-arrow-right"/></span>
             <div class="wallet-item balance-section" style="margin-top: 4vw">
                 <span class="balance">余额: {{ userInfo.money }}</span>
             </div>
@@ -93,7 +94,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .user-info {
     background-color: #f5f5f5;
     padding: 3px;
