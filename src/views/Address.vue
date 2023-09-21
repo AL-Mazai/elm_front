@@ -1,7 +1,11 @@
 <template>
     <div class="wrapper">
+
         <div class="header-title">
-            <p>我的地址</p>
+            <div style="margin-top: 2.5vw;font-size: 7vw;margin-right: 34vw" @click="$router.push('/userInfo')">
+                <i class="el-icon-arrow-left"></i>
+            </div>
+            <div style="margin-top: 3.5vw;font-size: 5vw">我的地址</div>
         </div>
 
         <div class="address-page">
@@ -25,24 +29,24 @@
                 </div>
             </div>
             <el-button type="primary" @click="addAddress" class="add-button">
-                <i class="el-icon-circle-plus-outline"></i>添加地址
+                <i class="el-icon-circle-plus-outline" style="margin-right: 5px"></i>新增收获地址
             </el-button>
         </div>
 
-        <!-- 底部 -->
-        <Footer></Footer>
+<!--        &lt;!&ndash; 底部 &ndash;&gt;-->
+<!--        <Footer></Footer>-->
     </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: "Address",
-    components: {
-        Footer
-    },
+    // components: {
+    //     Footer
+    // },
     data() {
         return {
             addressInfo: [],
@@ -96,7 +100,7 @@ export default {
 
     background-color: #0097FF;
     color: #fff;
-    font-size: 4.8vw;
+    /*font-size: 4.8vw;*/
 
     position: fixed;
     left: 0;
@@ -104,8 +108,8 @@ export default {
     z-index: 1000;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
 
 /*!****************** 地址展示部分 ******************!*/
@@ -155,21 +159,6 @@ export default {
     /*justify-content: space-between;*/
 }
 
-/*button {*/
-/*    background-color: #007bff;*/
-/*    color: #fff;*/
-/*    border: none;*/
-/*    padding: 5px 10px;*/
-/*    border-radius: 3px;*/
-/*    cursor: pointer;*/
-
-/*    margin-right: 1vh;*/
-/*}*/
-
-/*button:hover {*/
-/*    background-color: #0056b3;*/
-/*}*/
-
 .add-button {
     width: 100%;
 
@@ -182,9 +171,10 @@ export default {
     border-radius: 3px;
     cursor: pointer;
 
-    /*position: fixed;*/
-    /*bottom: 20px;*/
-    /*right: 20px;*/
+    position: fixed;
+    bottom: 1px;
+    right: 1px;
+    z-index: 1000; /* 如果有其他固定元素，可以适当调整 z-index 以确保按钮在上层 */
 }
 
 .add-button:hover {
