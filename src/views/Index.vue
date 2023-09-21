@@ -275,10 +275,10 @@ export default {
         },
         //获取食物类型列表
         getAllFoodInfo() {
-            this.axios.get("http://localhost:8085/foodList/getAllFood").then((res) => {
-                console.log(res.data)
-                this.foodInfos = res.data
-            })
+            // this.axios.get("http://localhost:8085/foodList/getAllFood").then((res) => {
+            //     console.log(res.data)
+            //     this.foodInfos = res.data
+            // })
         },
     }
 }

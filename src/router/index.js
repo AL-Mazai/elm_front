@@ -53,6 +53,11 @@ const routes = [
         name: "Register",
         component: () => import("../views/Register")
     },
+    {
+        path: "/address",
+        name: "Address",
+        component: () => import("../views/Address")
+    }
 ];
 
 const router = new VueRouter({
