@@ -58,6 +58,11 @@ const routes = [
         component: () => import("../views/Discover")
     },
     {
+        path: "/money",
+        name: "Money",
+        component: () => import("../views/Money")
+    },
+    {
         path: "/login",
         name: "Login",
         component: () => import("../views/Login"),
