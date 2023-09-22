@@ -58,16 +58,30 @@
             <hr>
             <div class="info-item">
                 <div class="icon" style="position: relative">
-                    <i class="el-icon-user"  style="margin-right: 5px"></i>
+                    <i class="el-icon-user" style="margin-right: 5px"></i>
                     商家入驻
                     <i class="el-icon-arrow-right" style="position: absolute;right: 1px;top: 1px"></i>
                 </div>
             </div>
         </div>
 
-        <div class="logout" @click="logout" style="position: relative">
+        <div class="logout" @click="showLogoutDialog" style="position: relative">
             <div style="font-size: 18px;position: absolute;top:16px;left: 1px;right: 1px">退出登录</div>
         </div>
+
+        <!-- 弹窗 -->
+        <el-dialog
+            title="退出登录确认"
+            :visible.sync="logoutDialogVisible"
+            width="80%"
+            @close="cancelLogout"
+        >
+            <p>您确定要退出吗？</p>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="cancelLogout">取消</el-button>
+                <el-button type="primary" @click="confirmLogout">确定</el-button>
+            </span>
+        </el-dialog>
 
         <!-- 底部 -->
         <Footer></Footer>
@@ -76,8 +90,9 @@
 
 <script>
 import Footer from "@/components/Footer";
-import {userInfo} from "@/api/user";
+import {userInfo, logout} from "@/api/user";
 import {getExpire} from "@/utils/localStorage";
+import {removeToken} from "@/utils/auth";
 
 export default {
     name: 'UserInfo',
@@ -88,6 +103,7 @@ export default {
         return {
             userInfo: {},
             isLogin: false,
+            logoutDialogVisible: false, //退出登录确认框
             //固定头像链接
             defaultAvatar: "http://s0k2fu3j0.hn-bkt.clouddn.com/image/1.png"
         };
@@ -100,6 +116,13 @@ export default {
             this.userInfo = res
             this.isLogin = true
             // console.log(this.userInfo)
+        }).catch((err) => {
+            this.$message({
+                message: "请先登录",
+                type: "warning",
+                duration: 1000
+            })
+            console.log(err)
         })
     },
     methods: {
@@ -116,9 +139,32 @@ export default {
                 })
             }
         },
+        //退出登录确认框
+        showLogoutDialog() {
+            // 显示退出登录确认框
+            this.logoutDialogVisible = true;
+        },
+        cancelLogout() {
+            // 取消退出登录
+            this.logoutDialogVisible = false; // 隐藏确认框
+            // 执行取消退出登录的其他操作
+        },
         //退出登录
-        logout(){
+        confirmLogout() {
+            logout().then((res) => {
+                console.log(res)
+                //删除cookie，删除本地用户信息，将登录状态设置为false
+                removeToken()
+                localStorage.removeItem("userInfo")
+                this.isLogin = false
 
+                this.$message({
+                    message: "退出成功",
+                    type: "success",
+                    duration: 1000
+                })
+            })
+            this.logoutDialogVisible = false
         },
         //头像加载失败
         handleAvatarError() {
@@ -203,9 +249,11 @@ export default {
     /*margin-bottom: 2px;*/
     color: #0097FF;
 }
-.info-item .icon{
+
+.info-item .icon {
     margin-top: 6px;
 }
+
 .wallet-section {
     background-color: white;
     border-radius: 5px;
@@ -233,7 +281,7 @@ export default {
     font-weight: bold;
 }
 
-.logout{
+.logout {
     background-color: white;
 
     /*border: solid 1px red;*/

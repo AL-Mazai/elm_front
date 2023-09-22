@@ -14,6 +14,15 @@ export function userLogin(username, password) {
         }
     })
 }
+
+// 退出登录
+export function logout() {
+    return request({
+        url: '/user/logout',
+        method: 'post'
+    })
+}
+
 // 获取用户信息
 export function userInfo() {
     return request({

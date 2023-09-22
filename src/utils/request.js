@@ -112,28 +112,28 @@ service.interceptors.response.use(res => {
             }
             return res.data.data; // 返回响应数据中的业务数据部分
         }
-    },
+    })
 
     // 异常处理
-    error => {
-        console.log('err' + error); // 打印异常信息
-        let {message} = error; // 获取异常消息
-
-        if (message === 'Network Error') {
-            message = '后端接口连接异常'; // 处理网络错误的消息
-        } else if (message.includes('timeout')) {
-            message = '系统接口请求超时'; // 处理请求超时的消息
-        } else if (message.includes('Request failed with status code')) {
-            message = '系统接口' + message.substr(message.length - 3) + '异常'; // 处理其他异常消息
-        }
-
-        Message({
-            message: message,
-            type: 'error',
-            duration: 3000
-        }); // 显示错误消息
+    // error => {
+    //     console.log('err' + error); // 打印异常信息
+    //     let {message} = error; // 获取异常消息
+    //
+    //     if (message === 'Network Error') {
+    //         message = '后端接口连接异常'; // 处理网络错误的消息
+    //     } else if (message.includes('timeout')) {
+    //         message = '系统接口请求超时'; // 处理请求超时的消息
+    //     } else if (message.includes('Request failed with status code')) {
+    //         message = '系统接口' + message.substr(message.length - 3) + '异常'; // 处理其他异常消息
+    //     }
+    //
+    //     Message({
+    //         message: message,
+    //         type: 'error',
+    //         duration: 3000
+    //     }); // 显示错误消息
 
         // return Promise.reject(error); // 返回一个rejected状态的Promise，传递异常信息
-    });
+    // });
 
 export default service
