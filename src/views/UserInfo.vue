@@ -156,6 +156,7 @@ export default {
                 })
             })
             this.logoutDialogVisible = false
+            this.userInfo = {}
         },
         //头像加载失败
         handleAvatarError() {
