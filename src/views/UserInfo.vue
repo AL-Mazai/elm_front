@@ -1,6 +1,6 @@
 <template>
     <div class="user-info">
-        <!--        已登录则显示用户新-->
+        <!--已登录则显示用户新-->
         <div v-if="isLogin" class="user-profile" style="background-color: #0097FF">
             <img :src="userInfo.userimg" alt="头像" class="avatar" @error="handleAvatarError"/>
             <div style="width:100%;">
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <!--        未登录-->
+        <!--未登录-->
         <div v-else class="user-profile" style="background-color: #0097FF">
             <img src="../assets/img/userImg/avatar.png" alt="头像" class="avatar"/>
             <h2 style="color: white" @click="$router.push('/login')">
@@ -20,7 +20,7 @@
             </h2>
         </div>
 
-        <!--        钱包-->
+        <!--钱包-->
         <div class="wallet-section">
             <span style="font-size: 20px;font-weight: bold">我的钱包</span>
             <span style="margin-left: 50vw" @click="$router.push('/money')">进入钱包<i
@@ -76,7 +76,7 @@
 
 <script>
 import Footer from "@/components/Footer";
-// import {userInfo} from "@/api/user";
+import {userInfo} from "@/api/user";
 import {getExpire} from "@/utils/localStorage";
 
 export default {
@@ -93,7 +93,14 @@ export default {
         };
     },
     created() {
-        this.getUserInfo()
+        // this.getUserInfo()
+        //获取用户信息
+        userInfo().then((res) => {
+            // console.log('@', res)
+            this.userInfo = res
+            this.isLogin = true
+            // console.log(this.userInfo)
+        })
     },
     methods: {
         //获取用户信息

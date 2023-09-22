@@ -20,6 +20,7 @@ Vue.prototype.axios = axios
 
 //配置全局localStorage的存值和取值
 import {getExpire} from "@/utils/localStorage";
+import {getToken} from "@/utils/auth";
 
 
 //将localStorage设置成全局
@@ -31,7 +32,7 @@ Vue.config.productionTip = false
 //登录状态判断
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.isLogin)) {  // 判断该路由是否需要登录权限
-        if (getExpire('userInfo')) {  // 判断当前用户的登录信息loginInfo是否存在
+        if (getExpire('userInfo') && getToken()) {  // 判断当前用户的登录信息loginInfo是否存在
             next();
         } else {
             Message.warning({

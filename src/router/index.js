@@ -43,9 +43,9 @@ const routes = [
         path: "/userInfo",
         name: "UserInfo",
         component: () => import("../views/UserInfo"),
-        meta: {
-            isLogin: true
-        }
+        // meta: {
+        //     isLogin: true
+        // }
     },
     {
         path: "/address",
@@ -64,6 +64,9 @@ const routes = [
         path: "/money",
         name: "Money",
         component: () => import("../views/Money"),
+        meta: {
+            isLogin: true
+        }
     },
     {
         path: "/login",

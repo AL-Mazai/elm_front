@@ -60,6 +60,7 @@ service.interceptors.request.use(config => {
         config.params = {}; // 清空原始的params参数对象
         config.url = url; // 将新的URL赋给config.url，包含了拼接的查询参数
     }
+
     return config; // 返回修改后的请求配置
 }, error => {
     console.log(error); // 打印错误信息
@@ -129,11 +130,10 @@ service.interceptors.response.use(res => {
         Message({
             message: message,
             type: 'error',
-            duration: 5 * 1000
+            duration: 3000
         }); // 显示错误消息
 
-        return Promise.reject(error); // 返回一个rejected状态的Promise，传递异常信息
+        // return Promise.reject(error); // 返回一个rejected状态的Promise，传递异常信息
     });
-
 
 export default service
