@@ -32,6 +32,7 @@
 <script>
 import {userLogin} from '../api/user.js'
 import {setToken} from "@/utils/auth";
+import {setExpire} from "@/utils/localStorage";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -70,7 +71,9 @@ export default {
                             // 登录成功记录token和用户信息，登录失败给对应提示
                             setToken(response.token)
                             // 存储用户信息
-                            localStorage.setItem("userInfo",JSON.stringify(response.userInfoVo))
+                            // localStorage.setItem("userInfo",JSON.stringify(response.userInfoVo))
+                            let validTime = 1000 * 60 * 60 * 24 //用户存储在localStorage期限为1天
+                            setExpire("userInfo", response.userInfoVo, validTime)
 
                             this.$router.push({path:'/'});
                             this.$message.success({
