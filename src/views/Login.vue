@@ -4,28 +4,31 @@
         <div class="title">
             <p class="title-font">用户登录</p>
         </div>
-        <div class="select-login">
-            <el-radio-group v-model="loginMethod" >
-                <el-radio-button label="username" >用户名登录</el-radio-button>
-                <el-radio-button label="phone" >验证码登录</el-radio-button>
-            </el-radio-group>
+        <div class="login-box">
+            <div class="select-login">
+                <el-radio-group v-model="loginMethod" >
+                    <el-radio-button label="username" >用户名登录</el-radio-button>
+                    <el-radio-button label="phone" >验证码登录</el-radio-button>
+                </el-radio-group>
+            </div>
+
+            <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px" style="margin-right: 10vw;">
+                <el-form-item label="手机号码" prop="phone" v-if="loginMethod === 'phone'">
+                    <el-input v-model="loginForm.phone" type="tel" placeholder="请输入手机号码"></el-input>
+                </el-form-item>
+                <el-form-item label="用户名" prop="username" v-if="loginMethod === 'username'">
+                    <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="password">
+                    <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password></el-input>
+                </el-form-item>
+                <el-form-item style="margin-right: 5vw;">
+                    <el-button type="primary" class="login-btn" @click="login('loginForm')">登录</el-button>
+                    <el-button type="primary" class="login-btn" @click="$router.push('/register')">去注册</el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
-        <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px" style="margin-right: 10vw;">
-            <el-form-item label="手机号码" prop="phone" v-if="loginMethod === 'phone'">
-                <el-input v-model="loginForm.phone" type="tel" placeholder="请输入手机号码"></el-input>
-            </el-form-item>
-            <el-form-item label="用户名" prop="username" v-if="loginMethod === 'username'">
-                <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" class="login-btn" @click="login('loginForm')">登录</el-button>
-                <el-button type="primary" class="login-btn" @click="$router.push('/register')">去注册</el-button>
-            </el-form-item>
-        </el-form>
     </div>
 </template>
 
@@ -100,6 +103,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    background-color: #f8f8f6;
+
+    min-height: 100vh; /* 最小高度为视窗高度 */
 }
 
 .title {
@@ -120,12 +127,22 @@ export default {
     color: white;
     font-size: 4.8vw;
 }
+.login-box{
+    margin-top: 20vw;
+    padding: 10px;
 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+
+    background-color: #fff; /* 内容区域背景色 */
+}
 .select-login{
     text-align: center;
     /*border: solid 1px red;*/
     width: 100%;
     height: 15vw;
+
+    margin-top: 20px;
 }
 
 .login-btn {
