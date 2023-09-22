@@ -18,26 +18,33 @@ Vue.use(ElementUI);
 import axios from 'axios'
 Vue.prototype.axios = axios
 
+//配置全局localStorage的存值和取值
+import {getExpire} from "@/utils/localStorage";
+
+
+//将localStorage设置成全局
+// import {getExpire} from './utils/localStorage'
+
 //关闭Vue.js启动时生成的生产提示
 Vue.config.productionTip = false
 
 //登录状态判断
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.isLogin)){  // 判断该路由是否需要登录权限
-    if (localStorage.getItem('userInfo')) {  // 判断当前用户的登录信息loginInfo是否存在
-      next();
+    if (to.matched.some(record => record.meta.isLogin)) {  // 判断该路由是否需要登录权限
+        if (getExpire('userInfo')) {  // 判断当前用户的登录信息loginInfo是否存在
+            next();
+        } else {
+            Message.warning({
+                message: "请先登录！",
+                duration: 800
+            })
+            next({
+                path: '/login'
+            })
+        }
     } else {
-      Message.warning({
-        message: "请先登录！",
-        duration: 800
-      })
-      next({
-        path: '/login'
-      })
+        next();
     }
-  }else {
-    next();
-  }
 })
 
 /**
@@ -45,6 +52,6 @@ router.beforeEach((to, from, next) => {
  * render选项定义了一个函数，该函数返回渲染App组件的虚拟DOM树，并且router选项是Vue.js路由的实例，可以通过它来定义和控制路由
  */
 new Vue({
-  render: h => h(App),
-  router,
+    render: h => h(App),
+    router,
 }).$mount('#app')
