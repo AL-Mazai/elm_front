@@ -91,7 +91,6 @@
 <script>
 import Footer from "@/components/Footer";
 import {userInfo, logout} from "@/api/user";
-import {getExpire} from "@/utils/localStorage";
 import {removeToken} from "@/utils/auth";
 
 export default {
@@ -109,7 +108,6 @@ export default {
         };
     },
     created() {
-        // this.getUserInfo()
         //获取用户信息
         userInfo().then((res) => {
             // console.log('@', res)
@@ -126,19 +124,6 @@ export default {
         })
     },
     methods: {
-        //获取用户信息
-        getUserInfo() {
-            if (getExpire("userInfo")) {
-                // console.log(getExpire("userInfo"))
-                this.userInfo = getExpire("userInfo")
-                this.isLogin = true
-            } else {
-                this.$message.warning({
-                    message: "请先登录",
-                    duration: 800
-                })
-            }
-        },
         //退出登录确认框
         showLogoutDialog() {
             // 显示退出登录确认框
@@ -159,8 +144,14 @@ export default {
                 this.isLogin = false
 
                 this.$message({
-                    message: "退出成功",
+                    message: "退出成功！",
                     type: "success",
+                    duration: 1000
+                })
+            }).catch(() => {
+                this.$message({
+                    message: "您尚未登录！",
+                    type: "warning",
                     duration: 1000
                 })
             })
