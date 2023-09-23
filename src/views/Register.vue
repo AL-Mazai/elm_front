@@ -41,9 +41,9 @@
                         show-password
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="性别" prop="sex">
-                    <el-radio v-model="registerForm.sex" label="1">男</el-radio>
-                    <el-radio v-model="registerForm.sex" label="0">女</el-radio>
+                <el-form-item label="性别" prop="usersex">
+                    <el-radio v-model="registerForm.usersex" label="1">男</el-radio>
+                    <el-radio v-model="registerForm.usersex" label="0">女</el-radio>
                 </el-form-item>
                 <el-form-item>
                     <el-button
@@ -51,8 +51,7 @@
                         class="login-btn"
                         @click="register('registerForm')"
                     >注册
-                    </el-button
-                    >
+                    </el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -60,17 +59,14 @@
 </template>
 
 <script>
+import {userRegister} from "@/api/user";
+
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Register',
     data() {
         return {
-            registerForm: {
-                phone: '',
-                password: '',
-                checkPassword: '',
-                sex: '',
-            },
+            registerForm: {},
             rules: {
                 phone: [
                     {required: true, message: '请输入手机号码', trigger: 'blur'},
@@ -83,7 +79,7 @@ export default {
                 username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
                 password: [{required: true, message: '请输入密码', trigger: 'blur'}],
                 checkPassword: [{required: true, message: '请确认密码', trigger: 'blur'}],
-                sex: [{required: true, message: '性别', trigger: 'blur'}],
+                usersex: [{required: true, message: '性别', trigger: 'blur'}],
             },
         }
     },
@@ -93,15 +89,24 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if (this.registerForm.password === this.registerForm.checkPassword) {
-                        // 在这里处理注册逻辑
-                        console.log('表单验证通过')
-                        console.log(this.form)
-                        this.$router.push('/login')
+                        let userInfo = {
+                            phone: this.registerForm.phone,
+                            username: this.registerForm.username,
+                            password: this.registerForm.password,
+                            usersex: this.registerForm.usersex,
+                            userimg: "http://qny.cai142857.cn/a66075beb77f417893ee7babebf7d7c4.png" //默认头像
+                        }
+                        //后端请求
+                        userRegister(userInfo).then((res) => {
+                            console.log(res)
+                            this.$message.success("注册成功！")
+                            this.$router.push('/login')
+                        })
                     } else {
                         this.$message.error('两次密码不一致')
                     }
                 } else {
-                    console.log('表单验证失败')
+                    this.$message.error("格式不正确，请重新填写！")
                     return false
                 }
             })
