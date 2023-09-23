@@ -27,6 +27,6 @@ app.config.globalProperties.axios = axios
 import router from './router'
 app.use(router)
 
-//启动程序111111
+//启动程序
 app.mount('#app')
 
