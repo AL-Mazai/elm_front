@@ -51,20 +51,14 @@
         <div style="height: 20vw">
 
         </div>
-<!--        &lt;!&ndash; 底部 &ndash;&gt;-->
-<!--        <Footer></Footer>-->
     </div>
 </template>
 
 <script>
-// import Footer from "@/components/Footer";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Money',
-    // components: {
-    //     Footer
-    // },
     data() {
         return {
             userInfo: {

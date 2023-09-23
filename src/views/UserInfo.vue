@@ -136,8 +136,8 @@ export default {
         },
         //退出登录
         confirmLogout() {
-            logout().then((res) => {
-                console.log(res)
+            logout().then(() => {
+                // console.log(res)
                 //删除cookie，删除本地用户信息，将登录状态设置为false
                 removeToken()
                 localStorage.removeItem("userInfo")
@@ -155,6 +155,7 @@ export default {
                     duration: 1000
                 })
             })
+
             this.logoutDialogVisible = false
             this.userInfo = {}
         },
@@ -164,10 +165,13 @@ export default {
         },
         //将电话号码一部分替换为*
         formatPhoneNumber(phone) {
-            const visibleDigits1 = phone.substring(0, 3); // 前6位可见
-            const visibleDigits2 = phone.substring(8, 10); // 前6位可见
-            const hiddenDigits = phone.substring(4, 7).replace(/\d/g, "*"); // 后面的数字替换为 *
-            return `${visibleDigits1}${hiddenDigits}${visibleDigits2}`;
+            if (phone) {
+                const visibleDigits1 = phone.substring(0, 3); // 前6位可见
+                const visibleDigits2 = phone.substring(8, 10); // 前6位可见
+                const hiddenDigits = phone.substring(4, 7).replace(/\d/g, "*"); // 后面的数字替换为 *
+                return `${visibleDigits1}${hiddenDigits}${visibleDigits2}`;
+            }
+            return ""; // 处理 phone 为 undefined 的情况
         }
     }
 };
