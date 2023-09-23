@@ -1,21 +1,32 @@
 <template>
     <div class="footer">
-        <div @click="$router.push('/')"> <i class="fa fa-home"></i> <p>首页</p> </div>
-        <div @click="$router.push('/discover')"> <i class="fa fa-compass"></i><p>发现</p> </div>
-        <div @click="$router.push('/orderList')"> <i class="fa fa-file-text"></i> <p>订单</p> </div>
-        <div @click="$router.push('/userInfo')"> <i class="fa fa-user-o"></i><p>我的</p> </div>
+        <div @click="$router.push('/')">
+            <i class="fa fa-home"></i>
+            <p>首页</p>
+        </div>
+        <div @click="$router.push('/discover')">
+            <i class="fa fa-compass"></i>
+            <p>发现</p>
+        </div>
+        <div @click="$router.push('/orderList')">
+            <i class="fa fa-file-text"></i>
+            <p>订单</p>
+        </div>
+        <div @click="$router.push('/userInfo')">
+            <i class="fa fa-user-o"></i>
+            <p>我的</p>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
-    name: "Footer"
+    name: 'Footer',
 }
 </script>
 
 <style scoped>
-/****************** 底部样式 ******************/
 .footer {
     position: fixed;
     bottom: 0;
