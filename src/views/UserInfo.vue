@@ -117,6 +117,15 @@
             title="修改信息"
             width="80%"
         >
+            <el-upload
+                class="avatar-uploader"
+                action="http://localhost:8081/user/upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <img :src="editUserInfo.userimg" class="edit-avatar">
+            </el-upload>
+
             <el-form :model="editUserInfo" ref="editFormRef" label-width="70px" >
                 <el-form-item label="用户名" prop="username" >
                     <el-input v-model="editUserInfo.username"></el-input>
@@ -226,6 +235,25 @@ export default {
             this.editUserInfo = getExpire("userInfo");
             // console.log(this.editUserInfo)
         },
+        handleAvatarSuccess(res){
+            // console.log(res)
+            if(res.code){
+                this.editUserInfo.userimg = res.data;
+            }else {
+                this.$message.error('上传失败');
+            }
+        },
+        beforeAvatarUpload(file) {//判断头像大小
+            const isJPG = file.type == 'image/png' || file.type == 'image/jpg' || file.type == 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG/JPEG/PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 1MB!');
+            }
+            return isJPG && isLt2M;
+        },
         editUser() {
             updateUserInfo(this.editUserInfo).then(() => {
                 //重置本地存储用户信息
@@ -267,10 +295,23 @@ export default {
     align-items: center;
     margin-bottom: 5px;
 }
+.avatar-uploader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    margin-bottom: 2vw;
+}
+.edit-avatar{
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+}
 .avatar {
     width: 100px;
     height: 100px;
+
     border-radius: 50%;
     margin-right: 20px;
 }
