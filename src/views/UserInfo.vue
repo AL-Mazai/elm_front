@@ -14,6 +14,7 @@
                 </div>
                 <div style="width: 100%; color: white; font-size: 18px; margin-top: 10px">
                     {{ formatPhoneNumber(userInfo.phone) }}
+                    <el-icon @click="showEditVisible()"><Edit /></el-icon>
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@
             </div>
         </div>
 
-        <!-- 弹窗 -->
+        <!-- 退出登录弹窗 -->
         <el-dialog
             title="退出登录确认"
             v-model="logoutDialogVisible"
@@ -110,6 +111,29 @@
             </template>
         </el-dialog>
 
+        <!--信息编辑弹窗-->
+        <el-dialog
+            v-model="editUserInfoVisible"
+            title="修改信息"
+            width="80%"
+        >
+            <el-form :model="editUserInfo" ref="editFormRef" label-width="70px" >
+                <el-form-item label="用户名" prop="username" >
+                    <el-input v-model="editUserInfo.username"></el-input>
+                </el-form-item>
+                <el-form-item label="电话号码" prop="phone">
+                    <el-input v-model="editUserInfo.phone"></el-input>
+                </el-form-item>
+            </el-form>
+
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="editUserInfoVisible = false">取消</el-button>
+                    <el-button type="primary" @click="editUser()">确认</el-button>
+                </span>
+            </template>
+        </el-dialog>
+
         <!-- 底部 -->
         <Footer></Footer>
     </div>
@@ -117,8 +141,9 @@
 
 <script>
 import Footer from '@/components/Footer'
-import {userInfo, logout} from '@/api/user'
+import {userInfo, logout, updateUserInfo} from '@/api/user'
 import {removeToken} from '@/utils/auth'
+import {getExpire, setExpire} from "@/utils/localStorage";
 
 export default {
     name: 'UserInfo',
@@ -127,33 +152,39 @@ export default {
     },
     data() {
         return {
-            userInfo: {},
-            isLogin: false,
-            logoutDialogVisible: false, //退出登录确认框
-            //固定头像链接
+            userInfo: {},   //本地存储的用户信息
+            editUserInfo: {},  //编辑的用户信息
+            isLogin: false,  //登录状态
+            logoutDialogVisible: false, //退出登录弹窗
+            editUserInfoVisible: false, //编辑用户信息弹窗
+            //默认头像链接
             defaultAvatar: 'http://s0k2fu3j0.hn-bkt.clouddn.com/image/1.png',
         }
     },
-    mounted() {
-        //获取用户信息
-        userInfo()
-            .then((res) => {
-                // console.log('@', res)
-                this.userInfo = res
-                this.isLogin = true
-                // console.log(this.userInfo)
-            })
-            .catch((err) => {
-                this.$message({
-                    message: '请先登录',
-                    type: 'warning',
-                    duration: 1000,
-                })
-                console.log(err)
-            })
+    created() {
+        this.getUserInfo()
     },
     methods: {
-        //退出登录确认框
+        //获取用户信息
+        getUserInfo(){
+            //获取用户信息
+            userInfo()
+                .then((res) => {
+                    // console.log('@', res)
+                    this.userInfo = res
+                    this.isLogin = true
+                    // console.log(this.userInfo)
+                })
+                .catch((err) => {
+                    this.$message({
+                        message: '请先登录',
+                        type: 'warning',
+                        duration: 1000,
+                    })
+                    console.log(err)
+                })
+        },
+        /****************退出登录***********************/
         showLogoutDialog() {
             // 显示退出登录确认框
             this.logoutDialogVisible = true
@@ -163,7 +194,6 @@ export default {
             this.logoutDialogVisible = false // 隐藏确认框
             // 执行取消退出登录的其他操作
         },
-        //退出登录
         confirmLogout() {
             logout()
                 .then(() => {
@@ -189,6 +219,23 @@ export default {
 
             this.logoutDialogVisible = false
             this.userInfo = {}
+        },
+        /*****************修改用户信息*******************/
+        showEditVisible(){
+            this.editUserInfoVisible = true
+            this.editUserInfo = getExpire("userInfo");
+            // console.log(this.editUserInfo)
+        },
+        editUser() {
+            updateUserInfo(this.editUserInfo).then(() => {
+                //重置本地存储用户信息
+                let validTime = 1000 * 60 * 60 * 24 //1天
+                setExpire("userInfo", this.editUserInfo, validTime)
+
+                //重新获取用户信息
+                this.getUserInfo()
+                this.editUserInfoVisible = false
+            })
         },
         //头像加载失败
         handleAvatarError() {

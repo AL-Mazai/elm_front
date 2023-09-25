@@ -11,6 +11,7 @@ export function userRegister(user){
     data: user
   })
 }
+
 // 登录
 export function userLogin(username, password) {
   return request({
@@ -39,5 +40,14 @@ export function userInfo() {
   return request({
     url: '/user/getUserInfo',
     method: 'get',
+  })
+}
+
+//修改用户信息
+export function updateUserInfo(user){
+  return request({
+    url: '/user/updateUserInfo',
+    method: 'put',
+    data: user
   })
 }
