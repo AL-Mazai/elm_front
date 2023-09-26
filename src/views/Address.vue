@@ -5,7 +5,9 @@
                 style="margin-top: 2.5vw; font-size: 7vw; margin-right: 34vw"
                 @click="$router.push('/userInfo')"
             >
-                <el-icon><ArrowLeft /></el-icon>
+                <el-icon>
+                    <ArrowLeft/>
+                </el-icon>
             </div>
             <div style="margin-top: 3.5vw; font-size: 5vw">我的地址</div>
         </div>
@@ -31,29 +33,63 @@
                             >
                                 <i class="el-icon-edit"></i>编辑
                             </el-button>
-                            <el-button
-                                type="danger"
-                                size="small"
-                                @click="deleteAddress(index)"
+                            <!-- 删除地址确认-->
+                            <el-popconfirm
+                                title="您确定要删除吗?"
+                                confirm-button-text="确认"
+                                cancel-button-text="取消"
+                                @confirm="deleteAddress(index)"
                             >
-                                <i class="el-icon-delete"></i>删除
-                            </el-button>
+                                <template #reference>
+                                    <el-button type="danger" size="small">
+                                        <i class="el-icon-delete"></i>删除
+                                    </el-button>
+                                </template>
+                            </el-popconfirm>
                         </div>
                     </div>
                 </div>
             </div>
-            <el-button type="primary" @click="addAddress" class="add-button">
-                <el-icon style="margin-right: 5px"><CirclePlus /></el-icon>
+            <el-button type="primary" @click="addAddressVisible = true" class="add-button">
+                <el-icon style="margin-right: 5px">
+                    <CirclePlus/>
+                </el-icon>
                 新增收获地址
             </el-button>
         </div>
+
+        <!--新增地址框-->
+        <el-dialog
+            v-model="addAddressVisible"
+            title="新增地址"
+            width="80%"
+        >
+            <el-form :model="addAddressForm" ref="editFormRef" label-width="80px">
+                <el-form-item label="联系人" prop="contactname">
+                    <el-input v-model="addAddressForm.contactname"></el-input>
+                </el-form-item>
+                <el-form-item label="号码" prop="contacttel">
+                    <el-input v-model="addAddressForm.contacttel"></el-input>
+                </el-form-item>
+                <el-form-item label="地址" prop="address">
+                    <el-input v-model="addAddressForm.address"></el-input>
+                </el-form-item>
+            </el-form>
+
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="addAddressVisible = false">取消</el-button>
+                    <el-button type="primary" @click="addAddressOfUser()">确认</el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 
 import {getExpire} from "@/utils/localStorage";
-import {getAddressOfUser} from "@/api/address";
+import {addAddress, getAddressOfUser, removeAddress} from "@/api/address";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -61,13 +97,15 @@ export default {
     data() {
         return {
             addressInfo: [],
+            addAddressVisible: false, //新增地址框
+            addAddressForm: {},  //新增地址表单
         }
     },
     created() {
         this.getAddressList()
     },
     methods: {
-        //获取我的所有地址
+        //获取用户地址列表
         getAddressList() {
             let userId = getExpire("userInfo").userid
             getAddressOfUser(userId).then((res) => {
@@ -76,7 +114,21 @@ export default {
             })
         },
         //增加地址
-        addAddress() {
+        addAddressOfUser() {
+            let userInfo = getExpire("userInfo");
+            this.addAddressForm.userid = userInfo.userid
+            this.addAddressForm.contactsex = userInfo.usersex
+
+            addAddress(this.addAddressForm).then(() => {
+                this.addAddressVisible = false
+                this.$message({
+                    message: "增加成功！",
+                    type: "success",
+                    duration: 1000
+                })
+
+                this.getAddressList()
+            })
         },
         // 编辑地址
         editAddress(index) {
@@ -84,7 +136,16 @@ export default {
         },
         // 删除地址
         deleteAddress(index) {
-            console.log(index)
+            console.log(this.addressInfo[index])
+            let addressId = this.addressInfo[index].daid
+            removeAddress(addressId).then(() => {
+                this.$message({
+                    message: "删除成功！",
+                    type: "success",
+                    duration: 1000
+                })
+                this.getAddressList()
+            })
         },
     },
 }
