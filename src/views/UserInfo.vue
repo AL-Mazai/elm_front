@@ -150,7 +150,7 @@
 
 <script>
 import Footer from '@/components/Footer'
-import {userInfo, logout, updateUserInfo} from '@/api/user'
+import {logout, updateUserInfo} from '@/api/user'
 import {removeToken} from '@/utils/auth'
 import {getExpire, setExpire} from "@/utils/localStorage";
 
@@ -176,22 +176,32 @@ export default {
     methods: {
         //获取用户信息
         getUserInfo(){
-            //获取用户信息
-            userInfo()
-                .then((res) => {
-                    // console.log('@', res)
-                    this.userInfo = res
-                    this.isLogin = true
-                    // console.log(this.userInfo)
+            if (getExpire("userInfo")) {
+                // console.log(getExpire("userInfo"))
+                this.userInfo = getExpire("userInfo")
+                this.isLogin = true
+            } else {
+                this.$message.warning({
+                    message: "请先登录",
+                    duration: 800
                 })
-                .catch((err) => {
-                    this.$message({
-                        message: '请先登录',
-                        type: 'warning',
-                        duration: 1000,
-                    })
-                    console.log(err)
-                })
+            }
+            // //获取用户信息
+            // userInfo()
+            //     .then((res) => {
+            //         // console.log('@', res)
+            //         this.userInfo = res
+            //         this.isLogin = true
+            //         // console.log(this.userInfo)
+            //     })
+            //     .catch((err) => {
+            //         this.$message({
+            //             message: '请先登录',
+            //             type: 'warning',
+            //             duration: 1000,
+            //         })
+            //         console.log(err)
+            //     })
         },
         /****************退出登录***********************/
         showLogoutDialog() {
@@ -263,6 +273,11 @@ export default {
                 //重新获取用户信息
                 this.getUserInfo()
                 this.editUserInfoVisible = false
+                this.$message({
+                    message: "修改成功！",
+                    type: "success",
+                    duration: 1000
+                })
             })
         },
         //头像加载失败
