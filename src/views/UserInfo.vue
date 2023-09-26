@@ -216,7 +216,6 @@ export default {
         confirmLogout() {
             logout()
                 .then(() => {
-                    // console.log(res)
                     //删除cookie，删除本地用户信息，将登录状态设置为false
                     removeToken()
                     localStorage.removeItem('userInfo')

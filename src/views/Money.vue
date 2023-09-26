@@ -13,7 +13,7 @@
 
         <!-- 用户信息和余额 -->
         <div class="user-info">
-            <div style="font-size: 6vw;margin-top: 2vw">
+            <div style="font-size: 6vw;margin-top: 2vw;margin-left: 2vw">
                 {{ userInfo.username }}
                 <span style="font-size: 12px;border-radius: 10px;background-color: red;padding: 1px">实名认证></span>
             </div>
