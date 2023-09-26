@@ -5,7 +5,7 @@
                 style="margin-top: 2.5vw; font-size: 7vw; margin-right: 34vw"
                 @click="$router.push('/userInfo')"
             >
-                <i class="el-icon-arrow-left"></i>
+                <el-icon><ArrowLeft /></el-icon>
             </div>
             <div style="margin-top: 3.5vw; font-size: 5vw">我的地址</div>
         </div>
@@ -47,21 +47,14 @@
                 新增收获地址
             </el-button>
         </div>
-
-        <!--        &lt;!&ndash; 底部 &ndash;&gt;-->
-        <!--        <Footer></Footer>-->
     </div>
 </template>
 
 <script>
-// import Footer from "@/components/Footer";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Address',
-    // components: {
-    //     Footer
-    // },
     data() {
         return {
             addressInfo: [],
