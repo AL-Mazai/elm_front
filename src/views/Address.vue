@@ -52,6 +52,9 @@
 
 <script>
 
+import {getExpire} from "@/utils/localStorage";
+import {getAddressOfUser} from "@/api/address";
+
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Address',
@@ -61,21 +64,16 @@ export default {
         }
     },
     created() {
-        this.getAddressInfo()
+        this.getAddressList()
     },
     methods: {
         //获取我的所有地址
-        getAddressInfo() {
-            this.axios
-                .get('http://localhost:8082/address/getAllAddress/', {
-                    params: {
-                        userId: 3,
-                    },
-                })
-                .then((res) => {
-                    // console.log(res.data)
-                    this.addressInfo = res.data
-                })
+        getAddressList() {
+            let userId = getExpire("userInfo").userid
+            getAddressOfUser(userId).then((res) => {
+                // console.log(res)
+                this.addressInfo = res
+            })
         },
         //增加地址
         addAddress() {

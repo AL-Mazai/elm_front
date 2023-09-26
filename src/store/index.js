@@ -6,7 +6,7 @@ export const state = {
   keywords: '', //关键词
   errorImg:
     'this.onerror=null;this.src="' + require('../assets/img/img.png') + '"',
-  baseURL: 'http://localhost:8081/',
+  baseURL: 'http://localhost:10010/',
 }
 
 export default Vuex.createStore({
