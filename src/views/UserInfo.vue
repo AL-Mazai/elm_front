@@ -14,7 +14,9 @@
                 </div>
                 <div style="width: 100%; color: white; font-size: 18px; margin-top: 10px">
                     {{ formatPhoneNumber(userInfo.phone) }}
-                    <el-icon @click="showEditVisible()"><Edit /></el-icon>
+                    <el-icon @click="showEditVisible()">
+                        <Edit/>
+                    </el-icon>
                 </div>
             </div>
         </div>
@@ -104,10 +106,10 @@
         >
             <p>您确定要退出吗？</p>
             <template v-slot:footer>
-        <span class="dialog-footer">
-          <el-button @click="cancelLogout">取消</el-button>
-          <el-button type="primary" @click="confirmLogout">确定</el-button>
-        </span>
+                <span class="dialog-footer">
+                  <el-button @click="cancelLogout">取消</el-button>
+                  <el-button type="primary" @click="confirmLogout">确定</el-button>
+                </span>
             </template>
         </el-dialog>
 
@@ -126,8 +128,8 @@
                 <img :src="editUserInfo.userimg" class="edit-avatar">
             </el-upload>
 
-            <el-form :model="editUserInfo" ref="editFormRef" label-width="70px" >
-                <el-form-item label="用户名" prop="username" >
+            <el-form :model="editUserInfo" ref="editFormRef" label-width="70px">
+                <el-form-item label="用户名" prop="username">
                     <el-input v-model="editUserInfo.username"></el-input>
                 </el-form-item>
                 <el-form-item label="电话号码" prop="phone">
@@ -175,7 +177,7 @@ export default {
     },
     methods: {
         //获取用户信息
-        getUserInfo(){
+        getUserInfo() {
             if (getExpire("userInfo")) {
                 // console.log(getExpire("userInfo"))
                 this.userInfo = getExpire("userInfo")
@@ -239,16 +241,16 @@ export default {
             this.userInfo = {}
         },
         /*****************修改用户信息*******************/
-        showEditVisible(){
+        showEditVisible() {
             this.editUserInfoVisible = true
             this.editUserInfo = getExpire("userInfo");
             // console.log(this.editUserInfo)
         },
-        handleAvatarSuccess(res){
+        handleAvatarSuccess(res) {
             // console.log(res)
-            if(res.code){
+            if (res.code) {
                 this.editUserInfo.userimg = res.data;
-            }else {
+            } else {
                 this.$message.error('上传失败');
             }
         },
@@ -309,19 +311,22 @@ export default {
     align-items: center;
     margin-bottom: 5px;
 }
-.avatar-uploader{
+
+.avatar-uploader {
     display: flex;
     justify-content: center;
     align-items: center;
 
     margin-bottom: 2vw;
 }
-.edit-avatar{
+
+.edit-avatar {
     width: 120px;
     height: 120px;
 
     border-radius: 50%;
 }
+
 .avatar {
     width: 100px;
     height: 100px;
