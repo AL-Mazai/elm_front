@@ -121,6 +121,12 @@ export default {
                                 message: '登录成功',
                                 duration: 800,
                             })
+                        }).catch(() => {
+                            this.$message.error({
+                                    message: '用户名或密码错误',
+                                    duration: 1000,
+                                }
+                            )
                         })
                     } else if (this.loginMethod === 'phone') {
                         // 处理手机号码登录逻辑
@@ -128,8 +134,10 @@ export default {
                         console.log('手机号码登录：', phone, password)
                     }
                 } else {
-                    console.log('表单验证失败')
-                    return false
+                    this.$message.warning({
+                        message:"请填写正确的用户名和密码",
+                        duration: 1000
+                    })
                 }
             })
         },
