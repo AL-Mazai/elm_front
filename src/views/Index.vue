@@ -22,15 +22,15 @@
         </div>
 
         <!-- 点餐 -->
-        <div class="foodType">
+        <div class="businessType">
             <div
-                v-for="food in foodInfos"
-                :key="food.foodId"
-                class="foodTypeItem"
+                v-for="businessType in businessTypeList"
+                :key="businessType.id"
+                class="businessTypeItem"
                 @click="$router.push('/businessList')"
             >
-                <img :src="food.logoUrl"/>
-                <p>{{ food.foodName }}</p>
+                <img :src="businessType.typeImg"/>
+                <p>{{ businessType.typeName }}</p>
             </div>
         </div>
 
@@ -261,6 +261,7 @@
 
 <script>
 import Footer from '../components/Footer'
+import {getAllType} from "@/api/business";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -270,22 +271,22 @@ export default {
     },
     data() {
         return {
-            foodInfos: [],
+            businessTypeList: [],
         }
     },
     created() {
-        this.getAllFoodInfo()
+        this.getAllBusinessType()
     },
     methods: {
         searchPro() {
             alert('hello')
         },
-        //获取食物类型列表
-        getAllFoodInfo() {
-            // this.axios.get("http://localhost:8085/foodList/getAllFood").then((res) => {
-            //     console.log(res.data)
-            //     this.foodInfos = res.data
-            // })
+        //获取商家类型列表
+        getAllBusinessType() {
+            getAllType().then((res) => {
+                // console.log('@', res)
+                this.businessTypeList = res
+            })
         },
     },
 }
@@ -342,7 +343,7 @@ export default {
     cursor: pointer;
 }
 
-.wrapper .foodType {
+.wrapper .businessType {
     width: 100%;
     height: 48vw;
     display: flex;
@@ -351,23 +352,26 @@ export default {
     align-items: center;
 }
 
-.wrapper .foodType .foodTypeItem {
+.wrapper .businessType .businessTypeItem {
     display: flex;
     flex-direction: column;
+
     height: 20vw;
     width: 18vw;
+
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
 }
 
-.wrapper .foodType .foodTypeItem img {
+.wrapper .businessType .businessTypeItem img {
     width: 12vw;
     height: 10.3vw;
 }
 
-.wrapper .foodType .foodTypeItem p {
-    font-size: 3.2vw;
+.wrapper .businessType .businessTypeItem p {
+    font-size: 4vw;
     color: #666;
 }
 

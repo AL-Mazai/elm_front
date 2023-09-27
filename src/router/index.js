@@ -95,7 +95,7 @@ router.beforeEach((to, from, next) => {
         } else {
             ElMessage({
                 message: '请先登录',
-                type: 'success',
+                type: 'warning',
                 duration: 1000
             })
             next({
