@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="logout" @click="showLogoutDialog" style="position: relative">
+        <div v-if="isLogin" class="logout" @click="showLogoutDialog" style="position: relative">
             <div style="font-size: 18px;position: absolute;top: 16px;left: 1px;right: 1px;">
                 退出登录
             </div>
@@ -226,13 +226,6 @@ export default {
                     this.$message({
                         message: '退出成功！',
                         type: 'success',
-                        duration: 1000,
-                    })
-                })
-                .catch(() => {
-                    this.$message({
-                        message: '您尚未登录！',
-                        type: 'warning',
                         duration: 1000,
                     })
                 })
