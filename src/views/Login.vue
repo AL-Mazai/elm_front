@@ -121,13 +121,7 @@ export default {
                                 message: '登录成功',
                                 duration: 800,
                             })
-                        }).catch(() => {
-                            this.$message.error({
-                                    message: '用户名或密码错误',
-                                    duration: 1000,
-                                }
-                            )
-                        })
+                        }).catch(() => {})
                     } else if (this.loginMethod === 'phone') {
                         // 处理手机号码登录逻辑
                         const {phone, password} = this.loginForm

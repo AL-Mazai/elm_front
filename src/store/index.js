@@ -1,14 +1,9 @@
-import * as Vuex from 'vuex'
-/** 状态定义 */
-export const state = {
-  loading: false,
-  themeObj: 0, //主题
-  keywords: '', //关键词
-  errorImg:
-    'this.onerror=null;this.src="' + require('../assets/img/img.png') + '"',
-  baseURL: 'http://localhost:10010/',
-}
-
-export default Vuex.createStore({
-  state,
-})
+// import * as Vuex from 'vuex'
+// /** 状态定义 */
+// export const state = {
+//   baseURL: 'http://localhost:10010/',
+// }
+//
+// export default Vuex.createStore({
+//   state,
+// })

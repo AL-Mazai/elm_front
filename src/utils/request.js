@@ -1,15 +1,15 @@
 import axios from 'axios'
 import {ElMessage} from 'element-plus'
-import store from '../store'
 import {getToken} from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+const baseURL = 'http://localhost:10010/'
 
 // 创建axios实例
 const service = axios.create({
     // axios中请求配置有baseURL选项，表示请求URL公共部分
-    baseURL: store.state.baseURL,
+    baseURL: baseURL,
     // 超时
     timeout: 10000,
 })
@@ -43,21 +43,20 @@ service.interceptors.response.use(
 
         if (code === 401) {
             // 处理状态码为401的情况，通常表示未授权或会话过期
-            ElMessage.error("您登录状态已过期，请重新登录！")
+            ElMessage.error(msg)
         } else if (code === 500) {
             // 处理状态码为500的情况，通常表示服务器内部错误
             ElMessage.error(msg)
         } else if (code !== 200) {
             // 处理其他状态码的情况，通常表示业务逻辑错误
-            Notification.error({
-                title: msg,
-            })
+            ElMessage.error(msg)
         } else {
             // 处理正常情况，状态码为200
             // 把字符串total 转换成 数字 total
             if (res.data.data && res.data.data.total) {
                 res.data.data.total = parseInt(res.data.data.total)
             }
+
             return res.data.data // 返回响应数据中的业务数据部分
         }
     },
