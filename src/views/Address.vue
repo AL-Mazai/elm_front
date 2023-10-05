@@ -26,14 +26,15 @@
                             <p>{{ address.contactname }} , {{ address.contacttel }}</p>
                         </div>
                         <div class="button-group">
+                            <!-- 编辑地址-->
                             <el-button
                                 type="primary"
                                 size="small"
-                                @click="editAddress(index)"
+                                @click="showUpdateAddressVisible(address)"
                             >
                                 <i class="el-icon-edit"></i>编辑
                             </el-button>
-                            <!-- 删除地址确认-->
+                            <!-- 删除地址-->
                             <el-popconfirm
                                 title="您确定要删除吗?"
                                 confirm-button-text="确认"
@@ -83,13 +84,45 @@
                 </span>
             </template>
         </el-dialog>
+
+        <!--编辑地址框-->
+        <el-dialog
+            v-model="updateAddressVisible"
+            title="修改地址"
+            width="95%"
+        >
+            <el-form :model="updateAddressForm" ref="editFormRef" label-width="70px">
+                <el-form-item label="联系人" prop="contactname">
+                    <el-input v-model="updateAddressForm.contactname"></el-input>
+                </el-form-item>
+                <el-form-item label="号码" prop="contacttel">
+                    <el-input v-model="updateAddressForm.contacttel"></el-input>
+                </el-form-item>
+                <el-form-item label="地址" prop="address">
+                    <el-input v-model="updateAddressForm.address"></el-input>
+                </el-form-item>
+            </el-form>
+
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="cancelEdit()">取消</el-button>
+                    <el-button type="primary" @click="editAddress()">确认</el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 
 import {getExpire} from "@/utils/localStorage";
-import {addAddress, getAddressOfUser, removeAddress} from "@/api/address";
+import {
+    addAddress,
+    getAddressOfUser,
+    removeAddress,
+    updateAddress
+}
+    from "@/api/address";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -97,8 +130,10 @@ export default {
     data() {
         return {
             addressInfo: [],
-            addAddressVisible: false, //新增地址框
             addAddressForm: {},  //新增地址表单
+            addAddressVisible: false,
+            updateAddressForm: {},  //编辑地址表单
+            updateAddressVisible: false,
         }
     },
     created() {
@@ -130,9 +165,26 @@ export default {
                 this.getAddressList()
             })
         },
-        // 编辑地址
-        editAddress(index) {
-            console.log(index)
+        /**************编辑地址******************/
+        showUpdateAddressVisible(address){
+            this.updateAddressForm = address
+            this.updateAddressVisible = true
+        },
+        cancelEdit(){
+            this.getAddressList()
+            this.updateAddressVisible = false
+        },
+        editAddress() {
+            updateAddress(this.updateAddressForm).then(() => {
+                // console.log(res)
+
+                this.$message.success({
+                    message:"修改成功！",
+                    duration: 1000
+                })
+                this.getAddressList()
+                this.updateAddressVisible = false
+            })
         },
         // 删除地址
         deleteAddress(index) {

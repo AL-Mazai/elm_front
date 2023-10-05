@@ -29,3 +29,12 @@ export function removeAddress(addressId){
         }
     })
 }
+
+//编辑地址
+export function updateAddress(address){
+    return request({
+        url: '/address/updateAddress',
+        method: 'put',
+        data: address
+    })
+}
