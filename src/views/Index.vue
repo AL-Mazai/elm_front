@@ -87,7 +87,7 @@
                     <div class="business-info-star">
                         <div class="business-info-star-left">
                             <el-rate
-                                :model-value="parseFloat(business.stars).toFixed(1)"
+                                v-model="business.stars"
                                 disabled
                                 show-score
                                 text-color="#ff9900"
@@ -106,27 +106,27 @@
                         <div>{{ business.businessIntroduction }}</div>
                     </div>
 
-<!--                    <div class="business-info-promotion">-->
-<!--                        <div class="business-info-promotion-left">-->
-<!--                            <div class="business-info-promotion-left-incon">新</div>-->
-<!--                            <p>饿了么新用户首单立减9元</p>-->
-<!--                        </div>-->
-<!--                        <div class="business-info-promotion-right">-->
-<!--                            <p>2个活动</p>-->
-<!--                            <i class="fa fa-caret-down"></i>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="business-info-promotion">-->
-<!--                        <div class="business-info-promotion-left">-->
-<!--                            <div-->
-<!--                                class="business-info-promotion-left-incon"-->
-<!--                                style="background-color: #f1884f"-->
-<!--                            >-->
-<!--                                特-->
-<!--                            </div>-->
-<!--                            <p>特价商品5元起</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                    <div class="business-info-promotion">-->
+                    <!--                        <div class="business-info-promotion-left">-->
+                    <!--                            <div class="business-info-promotion-left-incon">新</div>-->
+                    <!--                            <p>饿了么新用户首单立减9元</p>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="business-info-promotion-right">-->
+                    <!--                            <p>2个活动</p>-->
+                    <!--                            <i class="fa fa-caret-down"></i>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="business-info-promotion">-->
+                    <!--                        <div class="business-info-promotion-left">-->
+                    <!--                            <div-->
+                    <!--                                class="business-info-promotion-left-incon"-->
+                    <!--                                style="background-color: #f1884f"-->
+                    <!--                            >-->
+                    <!--                                特-->
+                    <!--                            </div>-->
+                    <!--                            <p>特价商品5元起</p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                 </div>
             </li>
         </div>
@@ -174,9 +174,12 @@ export default {
         //获取商家列表(按销量最高)
         getBusinessList(sortWay) {
             getAllBusiness(sortWay).then((res) => {
-                // console.log(res)
-                this.businessList = res;
-            })
+                // 将带有一位小数的数字字符串转为数字
+                this.businessList = res.map((business) => ({
+                    ...business,
+                    stars: parseFloat(business.stars).toFixed(1), // 将保留一位小数的字符串再次转为浮点数
+                }));
+            });
         },
     },
 }
