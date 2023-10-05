@@ -63,8 +63,10 @@
             <div>
                 <p>综合排序 <i class="fa fa-caret-down"></i></p>
             </div>
-            <div><p>距离最近</p></div>
-            <div><p>销量最高</p></div>
+            <el-radio-group v-model="sortWay">
+                <el-radio :label="1" @click="getBusinessList(1)">销量最高</el-radio>
+                <el-radio :label="2" @click="getBusinessList(2)">评分最高</el-radio>
+            </el-radio-group>
             <div>
                 <p>筛选<i class="fa fa-filter"></i></p>
             </div>
@@ -72,181 +74,59 @@
 
         <!-- 推荐商家列表部分 -->
         <div class="business">
-            <li>
-                <img src="../assets/img/sj01.png"/>
+            <li
+                v-for="business in businessList"
+                :key="business.businessId"
+            >
+                <img :src="business.businessImg"/>
                 <div class="business-info">
                     <div class="business-info-h">
-                        <h3>万家饺子（软件园E18店）</h3>
-                        <div class="business-info-like">&#8226;</div>
+                        <h3>{{ business.businessName }}</h3>
                     </div>
+                    <div style="color: #666;font-size: 3.1vw"> 月售{{ business.orderNum }}单</div>
                     <div class="business-info-star">
                         <div class="business-info-star-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <p>4.9 月售345单</p>
+                            <el-rate
+                                :model-value="parseFloat(business.stars).toFixed(1)"
+                                disabled
+                                show-score
+                                text-color="#ff9900"
+                                score-template="{value}"
+                                size="small"
+                                class="business-rate"
+                            />
                         </div>
                         <div class="business-info-star-right">云大专送</div>
                     </div>
                     <div class="business-info-delivery">
-                        <p>&#165;15起送 | &#165;3配送</p>
+                        <p>&#165;{{ business.starPrice }}起送 | &#165;{{ business.deliveryPrice }}配送</p>
                         <p>3.22km | 30分钟</p>
                     </div>
                     <div class="business-info-explain">
-                        <div>各种饺子</div>
+                        <div>{{ business.businessIntroduction }}</div>
                     </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">新</div>
-                            <p>饿了么新用户首单立减9元</p>
-                        </div>
-                        <div class="business-info-promotion-right">
-                            <p>2个活动</p>
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div
-                                class="business-info-promotion-left-incon"
-                                style="background-color: #f1884f"
-                            >
-                                特
-                            </div>
-                            <p>特价商品5元起</p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <img src="../assets/img/sj02.png"/>
-                <div class="business-info">
-                    <div class="business-info-h">
-                        <h3>小锅饭豆腐馆（全运店）</h3>
-                        <div class="business-info-like">&#8226;</div>
-                    </div>
-                    <div class="business-info-star">
-                        <div class="business-info-star-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <p>4.9 月售345单</p>
-                        </div>
-                        <div class="business-info-star-right">云大专送</div>
-                    </div>
-                    <div class="business-info-delivery">
-                        <p>&#165;15起送 | &#165;3配送</p>
-                        <p>3.22km | 30分钟</p>
-                    </div>
-                    <div class="business-info-explain">
-                        <div>各种饺子</div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">新</div>
-                            <p>饿了么新用户首单立减9元</p>
-                        </div>
-                        <div class="business-info-promotion-right">
-                            <p>2个活动</p>
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">特</div>
-                            <p>特价商品5元起</p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <img src="../assets/img/sj03.png"/>
-                <div class="business-info">
-                    <div class="business-info-h">
-                        <h3>麦当劳麦乐送（全运路店）</h3>
-                        <div class="business-info-like">&#8226;</div>
-                    </div>
-                    <div class="business-info-star">
-                        <div class="business-info-star-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <p>4.9 月售345单</p>
-                        </div>
-                        <div class="business-info-star-right">云大专送</div>
-                    </div>
-                    <div class="business-info-delivery">
-                        <p>&#165;15起送 | &#165;3配送</p>
-                        <p>3.22km | 30分钟</p>
-                    </div>
-                    <div class="business-info-explain">
-                        <div>各种饺子</div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">新</div>
-                            <p>饿了么新用户首单立减9元</p>
-                        </div>
-                        <div class="business-info-promotion-right">
-                            <p>2个活动</p>
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">特</div>
-                            <p>特价商品5元起</p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <img src="../assets/img/sj04.png"/>
-                <div class="business-info">
-                    <div class="business-info-h">
-                        <h3>米村拌饭（浑南店）</h3>
-                        <div class="business-info-like">&#8226;</div>
-                    </div>
-                    <div class="business-info-star">
-                        <div class="business-info-star-left">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <p>4.9 月售345单</p>
-                        </div>
-                        <div class="business-info-star-right">云大专送</div>
-                    </div>
-                    <div class="business-info-delivery">
-                        <p>&#165;15起送 | &#165;3配送</p>
-                        <p>3.22km | 30分钟</p>
-                    </div>
-                    <div class="business-info-explain">
-                        <div>各种饺子</div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">新</div>
-                            <p>饿了么新用户首单立减9元</p>
-                        </div>
-                        <div class="business-info-promotion-right">
-                            <p>2个活动</p>
-                            <i class="fa fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="business-info-promotion">
-                        <div class="business-info-promotion-left">
-                            <div class="business-info-promotion-left-incon">特</div>
-                            <p>特价商品5元起</p>
-                        </div>
-                    </div>
+
+<!--                    <div class="business-info-promotion">-->
+<!--                        <div class="business-info-promotion-left">-->
+<!--                            <div class="business-info-promotion-left-incon">新</div>-->
+<!--                            <p>饿了么新用户首单立减9元</p>-->
+<!--                        </div>-->
+<!--                        <div class="business-info-promotion-right">-->
+<!--                            <p>2个活动</p>-->
+<!--                            <i class="fa fa-caret-down"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="business-info-promotion">-->
+<!--                        <div class="business-info-promotion-left">-->
+<!--                            <div-->
+<!--                                class="business-info-promotion-left-incon"-->
+<!--                                style="background-color: #f1884f"-->
+<!--                            >-->
+<!--                                特-->
+<!--                            </div>-->
+<!--                            <p>特价商品5元起</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </li>
         </div>
@@ -261,7 +141,7 @@
 
 <script>
 import Footer from '../components/Footer'
-import {getAllType} from "@/api/business";
+import {getAllType, getAllBusiness} from "@/api/business";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -271,11 +151,14 @@ export default {
     },
     data() {
         return {
-            businessTypeList: [],
+            businessTypeList: [], //商家类型列表
+            businessList: [],  //商家列表
+            sortWay: 1,  //商家列表排序方法，默认为按销量排序
         }
     },
     created() {
         this.getAllBusinessType()
+        this.getBusinessList(this.sortWay)
     },
     methods: {
         searchPro() {
@@ -286,6 +169,13 @@ export default {
             getAllType().then((res) => {
                 // console.log('@', res)
                 this.businessTypeList = res
+            })
+        },
+        //获取商家列表(按销量最高)
+        getBusinessList(sortWay) {
+            getAllBusiness(sortWay).then((res) => {
+                // console.log(res)
+                this.businessList = res;
             })
         },
     },
@@ -449,7 +339,7 @@ export default {
 
 .wrapper .recommendType {
     width: 100%;
-    height: 5vw;
+    height: 8vw;
     margin-bottom: 5vw;
     display: flex;
     justify-content: space-around;
@@ -457,7 +347,7 @@ export default {
 }
 
 .wrapper .recommendType p {
-    font-size: 2.5vw;
+    font-size: 3.8vw;
     color: #555;
 }
 
@@ -526,17 +416,6 @@ li
 .business-info-star-left {
     display: flex;
     align-items: center;
-}
-
-.wrapper
-.business
-li
-.business-info
-.business-info-star
-.business-info-star-left
-.fa-star {
-    color: #fec80e;
-    margin-right: 0.5vw;
 }
 
 .wrapper
