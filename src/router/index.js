@@ -17,7 +17,7 @@ const router = createRouter({
             component: (() => import('../views/BusinessList')),
         },
         {
-            path: '/businessInfo',
+            path: '/BusinessInfo',
             name: 'BusinessInfo',
             component: (() => import('../views/BusinessInfo')),
         },

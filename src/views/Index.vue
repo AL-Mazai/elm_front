@@ -77,6 +77,7 @@
             <li
                 v-for="business in businessList"
                 :key="business.businessId"
+                @click="getBusinessInfo(business)"
             >
                 <img :src="business.businessImg"/>
                 <div class="business-info">
@@ -180,6 +181,14 @@ export default {
                     stars: parseFloat(business.stars).toFixed(1), // 将保留一位小数的字符串再次转为浮点数
                 }));
             });
+        },
+        //跳转到商家页面
+        getBusinessInfo(business){
+            // console.log(business)
+            this.$router.push({
+                name:'BusinessInfo',
+                query: business,
+            })
         },
     },
 }

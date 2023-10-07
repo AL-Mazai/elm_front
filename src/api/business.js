@@ -16,3 +16,12 @@ export function getAllBusiness(sortWay){
         params:{sortWay}
     })
 }
+
+//获取商家信息
+export function getBusinessInfo(businessId){
+    return request({
+        url: '/business/getBusinessInfo',
+        method: 'get',
+        params: {businessId}
+    })
+}
