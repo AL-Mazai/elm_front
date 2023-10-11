@@ -7,136 +7,38 @@
 
         <!-- 商家logo部分 -->
         <div class="business-logo">
-            <img src="../assets/img/sj01.png"/>
+            <img :src="business.businessImg"/>
         </div>
 
         <!-- 商家信息部分 -->
         <div class="business-info">
-            <h1>万家饺子（软件园E18店）</h1>
-            <p>&#165;15起送 &#165;3配送</p>
-            <p>各种饺子炒菜</p>
+            <h1>{{ business.businessName }}</h1>
+            <p>&#165;{{ business.starPrice }}起送 &#165;{{ business.deliveryPrice }}配送</p>
+            <p>{{ business.businessIntroduction }}</p>
         </div>
 
         <!-- 食品列表部分 -->
         <div class="food">
-            <li>
+            <li
+                v-for="food in foodListOfBusiness"
+                :key="food.foodid"
+            >
+                <!--食物信息-->
                 <div class="food-left">
-                    <img src="../assets/img/sp01.png"/>
+                    <img :src="food.foodimg"/>
                     <div class="food-left-info">
-                        <h3>纯肉鲜肉（水饺）</h3>
-                        <p>新鲜猪肉</p>
-                        <p>&#165;15</p>
+                        <h3>{{ food.foodname }}</h3>
+                        <p>{{ food.foodexplain }}</p>
+                        <p>&#165;{{ food.foodprice }}</p>
                     </div>
                 </div>
                 <div class="food-right">
                     <div>
-                        <i class="fa fa-minus-circle"></i>
+                        <i class="fa fa-minus-circle" @click="addOrderFoodNum"></i>
                     </div>
-                    <p><span>3</span></p>
+                    <p><span>{{food.orderFoodNum}}</span></p>
                     <div>
-                        <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp02.png"/>
-                    <div class="food-left-info">
-                        <h3>玉米鲜肉（水饺）</h3>
-                        <p>玉米鲜肉</p>
-                        <p>&#165;16</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div>
-                        <i class="fa fa-minus-circle"></i>
-                    </div>
-                    <p><span>2</span></p>
-                    <div>
-                        <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp03.png"/>
-                    <div class="food-left-info">
-                        <h3>虾仁三鲜（蒸饺）</h3>
-                        <p>虾仁三鲜</p>
-                        <p>&#165;22</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div></div>
-                    <p></p>
-                    <div><i class="fa fa-plus-circle"></i></div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp04.png"/>
-                    <div class="food-left-info">
-                        <h3>素三鲜（蒸饺）</h3>
-                        <p>素三鲜</p>
-                        <p>&#165;15</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div></div>
-                    <p></p>
-                    <div>
-                        <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp05.png"/>
-                    <div class="food-left-info">
-                        <h3>角瓜鸡蛋（蒸饺）</h3>
-                        <p>角瓜鸡蛋</p>
-                        <p>&#165;16</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div></div>
-                    <p></p>
-                    <div>
-                        <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp06.png"/>
-                    <div class="food-left-info">
-                        <h3>小白菜肉（水饺）</h3>
-                        <p>小白菜肉</p>
-                        <p>&#165;18</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div></div>
-                    <p></p>
-                    <div>
-                        <i class="fa fa-plus-circle"></i>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="food-left">
-                    <img src="../assets/img/sp07.png"/>
-                    <div class="food-left-info">
-                        <h3>芹菜牛肉（水饺）</h3>
-                        <p>芹菜牛肉</p>
-                        <p>&#165;18</p>
-                    </div>
-                </div>
-                <div class="food-right">
-                    <div></div>
-                    <p></p>
-                    <div>
-                        <i class="fa fa-plus-circle"></i>
+                        <i class="fa fa-plus-circle" @click="reduceOrderFoodNum"></i>
                     </div>
                 </div>
             </li>
@@ -175,19 +77,38 @@
 
 <script>
 
+import {getAllFood} from "@/api/business";
+
 export default {
     name: 'BusinessInfo',
     data() {
         return {
-            business: {},
+            business: {},  //商家信息
+            foodListOfBusiness: [], //商家食品列表
+            orderFoodNum: 0  //下单的食品数量
         }
     },
     created() {
         this.business = this.$route.query
         // console.log(this.business)
+        this.foodList()
     },
-    methods:{
+    methods: {
+        //获取食品列表
+        foodList() {
+            let businessId = this.business.businessId
+            getAllFood(businessId).then((res) => {
+                this.foodListOfBusiness = res
+                console.log(res)
+            })
+        },
+        /*************下单******************/
+        addOrderFoodNum(){
 
+        },
+        reduceOrderFoodNum(){
+
+        },
     }
 }
 </script>
