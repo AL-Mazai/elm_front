@@ -7,26 +7,33 @@
 
         <!--商家列表-->
         <div class="business">
-            <li v-for="business in BusinessInfos" :key="business.businessId">
+            <li v-for="business in businessListByType" :key="business.businessId">
                 <div class="business-img">
-                    <img :src="business.logoUrl" @click="$router.push('/businessInfo')"/>
-                    <div class="business-img-quantity">{{ business.other }}</div>
+                    <img :src="business.businessImg" @click="$router.push('/businessInfo')"/>
                 </div>
                 <div class="business-info">
-                    <h3>{{ business.name }}</h3>
+                    <h3>{{ business.businessName }}</h3>
+                    <div style="color: #666;font-size: 3.1vw"> 月售{{ business.orderNum }}单</div>
+                    <div class="business-info-star">
+                        <div class="business-info-star-left">
+                            <el-rate
+                                v-model="business.stars"
+                                disabled
+                                show-score
+                                text-color="#ff9900"
+                                score-template="{value}"
+                                size="small"
+                                class="business-rate"
+                            />
+                        </div>
+                        <div class="business-info-star-right">云大专送</div>
+                    </div>
                     <p>
                         &#165;{{ business.starPrice }}起送 | &#165;{{
                             business.deliveryPrice
                         }}配送
                     </p>
-                    <p>{{ business.businessExplain }}</p>
-                    <el-button
-                        size="mini"
-                        type="danger"
-                        @click="deleteBusiness(business.businessId)"
-                    >删除
-                    </el-button
-                    >
+                    <p>{{ business.businessIntroduction }}</p>
                 </div>
             </li>
         </div>
@@ -41,32 +48,30 @@
 
 <script>
 import Footer from '@/components/Footer'
+import {getAllBusinessByType} from "@/api/business";
 
 export default {
     name: 'BusinessList',
     components: {Footer},
     data() {
         return {
-            businessForm: {
-                name: '',
-                starPrice: '',
-                deliveryPrice: '',
-                businessExplain: '',
-                logoUrl: '',
-                other: Math.floor(Math.random() * 5) + 1,
-            },
-            addDialogVisible: false,
-            imageUrl: '',
-            BusinessInfos: [],
+            businessListByType: [],
+            businessType: ''
         }
     },
     created() {
-        this.getAllBusinessInfo()
+        this.businessType = this.$route.query
+        // console.log(this.businessType.id)
+        this.getAllBusiness()
     },
     methods: {
-        //获取商家列表
-        getAllBusinessInfo() {
-
+        //根据商家类型获取商家列表
+        getAllBusiness() {
+            let typeId = this.businessType.id
+            getAllBusinessByType(typeId).then((res) => {
+                console.log(res)
+                this.businessListByType = res
+            })
         },
     },
 }
@@ -164,6 +169,9 @@ export default {
 
 .wrapper .business li .business-info {
     margin-left: 3vw;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 3vw;
 }
 
 .wrapper .business li .business-info h3 {
@@ -176,4 +184,24 @@ export default {
     color: #888;
     margin-top: 2vw;
 }
+.wrapper .business li .business-info .business-info-star{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 2vw;
+    font-size: 3.1vw;
+}
+.wrapper .business li .business-info .business-info-star .business-info-star-left{
+    align-items: center;
+}
+
+.wrapper .business li .business-info .business-info-star .business-info-star-right {
+    background-color: #0097ff;
+    color: #fff;
+    font-size: 2.4vw;
+    border-radius: 2px;
+    padding: 0 0.6vw;
+}
+
 </style>

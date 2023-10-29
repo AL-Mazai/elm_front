@@ -12,7 +12,7 @@ const router = createRouter({
             component: (() => import('../views/Index')),
         },
         {
-            path: '/businessList',
+            path: '/BusinessList',
             name: 'BusinessList',
             component: (() => import('../views/BusinessList')),
         },

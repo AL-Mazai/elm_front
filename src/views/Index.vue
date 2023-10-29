@@ -21,13 +21,13 @@
             </div>
         </div>
 
-        <!-- 点餐 -->
+        <!-- 点餐类型 -->
         <div class="businessType">
             <div
                 v-for="businessType in businessTypeList"
                 :key="businessType.id"
                 class="businessTypeItem"
-                @click="$router.push('/businessList')"
+                @click="getAllBusinessOfType(businessType)"
             >
                 <img :src="businessType.typeImg"/>
                 <p>{{ businessType.typeName }}</p>
@@ -190,6 +190,13 @@ export default {
                 query: business,
             })
         },
+        //按类型跳转到商家列表
+        getAllBusinessOfType(type){
+            this.$router.push({
+                name:'BusinessList',
+                query: type
+            })
+        }
     },
 }
 </script>
