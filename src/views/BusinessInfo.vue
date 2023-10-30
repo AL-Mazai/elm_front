@@ -99,7 +99,7 @@ export default {
             let businessId = this.business.businessId
             getAllFood(businessId).then((res) => {
                 this.foodListOfBusiness = res
-                console.log(res)
+                // console.log(res)
             })
         },
         /*************下单******************/

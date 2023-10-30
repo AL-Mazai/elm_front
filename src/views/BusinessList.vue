@@ -7,7 +7,9 @@
 
         <!--商家列表-->
         <div class="business">
-            <li v-for="business in businessListByType" :key="business.businessId">
+            <li v-for="business in businessListByType" :key="business.businessId"
+                @click="getBusinessInfo(business)"
+            >
                 <div class="business-img">
                     <img :src="business.businessImg" @click="$router.push('/businessInfo')"/>
                 </div>
@@ -71,6 +73,14 @@ export default {
             getAllBusinessByType(typeId).then((res) => {
                 console.log(res)
                 this.businessListByType = res
+            })
+        },
+        //跳转到商家页面
+        getBusinessInfo(business){
+            console.log(business)
+            this.$router.push({
+                name:'BusinessInfo',
+                query: business,
             })
         },
     },
