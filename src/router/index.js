@@ -22,7 +22,7 @@ const router = createRouter({
             component: (() => import('../views/BusinessInfo')),
         },
         {
-            path: '/order',
+            path: '/Order',
             name: 'Order',
             component: (() => import('../views/Order')),
         },

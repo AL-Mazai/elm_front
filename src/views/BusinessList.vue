@@ -2,11 +2,17 @@
     <div class="wrapper">
         <!-- header部分 -->
         <header>
-            <div>商家列表</div>
+            <div>{{ businessType.typeName }}</div>
         </header>
 
+        <!--没有商家入驻-->
+        <div v-if="businessListByType == ''">
+            <div class="no-business">
+                还没有商家入驻
+            </div>
+        </div>
         <!--商家列表-->
-        <div class="business">
+        <div v-else class="business">
             <li v-for="business in businessListByType" :key="business.businessId"
                 @click="getBusinessInfo(business)"
             >
@@ -58,12 +64,13 @@ export default {
     data() {
         return {
             businessListByType: [],
-            businessType: ''
+            businessType: '',
+            titile: ''
         }
     },
     created() {
         this.businessType = this.$route.query
-        // console.log(this.businessType.id)
+        console.log(this.businessType.typeName)
         this.getAllBusiness()
     },
     methods: {
@@ -214,4 +221,13 @@ export default {
     padding: 0 0.6vw;
 }
 
+.no-business {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 80vh; /* 设置高度为视口高度，使元素占满整个屏幕 */
+
+    font-size: 50px;
+    color: #d2d2c8;
+}
 </style>

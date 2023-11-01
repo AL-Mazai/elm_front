@@ -17,6 +17,12 @@
             <p>{{ business.businessIntroduction }}</p>
         </div>
 
+        <!--没有食物-->
+        <div v-if="foodListOfBusiness == ''">
+            <div class="no-food">
+                该商家还没有食物
+            </div>
+        </div>
         <!-- 食品列表部分 -->
         <div class="food">
             <li
@@ -34,11 +40,11 @@
                 </div>
                 <div class="food-right">
                     <div>
-                        <i class="fa fa-minus-circle" @click="addOrderFoodNum"></i>
+                        <i class="fa fa-minus-circle" @click="reduceOrderFoodNum(food)"></i>
                     </div>
-                    <p><span>{{food.orderFoodNum}}</span></p>
+                    <p><span>{{ food.orderFoodNum }}</span></p>
                     <div>
-                        <i class="fa fa-plus-circle" @click="reduceOrderFoodNum"></i>
+                        <i class="fa fa-plus-circle" @click="addOrderFoodNum(food)"></i>
                     </div>
                 </div>
             </li>
@@ -52,22 +58,20 @@
             <div class="cart-left">
                 <div class="cart-left-icon">
                     <i class="fa fa-shopping-cart"></i>
-                    <div class="cart-left-icon-quantity">3</div>
+                    <div class="cart-left-icon-quantity">{{ orderFoodTotalNum }}</div>
                 </div>
                 <div class="cart-left-info">
-                    <p>&#165;12.88</p>
-                    <p>另需配送费3元</p>
+                    <p>￥{{ totalMoney }}</p>
+                    <p>另需配送费{{ business.deliveryPrice }}元</p>
                 </div>
             </div>
             <div class="cart-right">
                 <!-- 不够起送费 -->
-                <!--
-                          <div class="cart-right-item">
-                          &#165;15起送
-                          </div>
-                          -->
+                <div v-if="totalMoney < 15" class="cart-right-item">
+                    &#165;{{ business.starPrice }}起送
+                </div>
                 <!-- 达到起送费 -->
-                <div class="cart-right-item" @click="$router.push('/order')">
+                <div v-else class="cart-right-item" @click="confirmOrder">
                     去结算
                 </div>
             </div>
@@ -85,7 +89,10 @@ export default {
         return {
             business: {},  //商家信息
             foodListOfBusiness: [], //商家食品列表
-            orderFoodNum: 0  //下单的食品数量
+
+            orderFoodTotalNum: 0, //下单的食品总数
+            totalMoney: 0,  //总金额
+            orderList: [],  //下单列表
         }
     },
     created() {
@@ -103,12 +110,33 @@ export default {
             })
         },
         /*************下单******************/
-        addOrderFoodNum(){
+        addOrderFoodNum(food) {
+            food.orderFoodNum += 1
+            this.orderFoodTotalNum += 1
 
+            this.totalMoney += food.foodprice
         },
-        reduceOrderFoodNum(){
+        reduceOrderFoodNum(food) {
+            if (food.orderFoodNum > 0) {
+                this.orderFoodTotalNum -= 1
+                food.orderFoodNum -= 1
 
+                this.totalMoney -= food.foodprice
+            }
         },
+        //跳转到确认订单页面
+        confirmOrder() {
+            let foodList = this.foodListOfBusiness.filter(food => food.orderFoodNum > 0);
+            console.log(foodList)
+            this.$router.push({
+                path: 'Order',
+                query: {
+                    foodList: JSON.stringify(foodList),
+                    business: JSON.stringify(this.business),
+                    totalMoney: JSON.stringify(this.totalMoney),
+                }
+            });
+        }
     }
 }
 </script>
@@ -307,5 +335,17 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.no-food {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    /*height: 80vh; !* 设置高度为视口高度，使元素占满整个屏幕 *!*/
+
+    margin-top: 20vh;
+
+    font-size: 30px;
+    color: #d2d2c8;
 }
 </style>

@@ -12,35 +12,31 @@
                 <p>云南大学楸苑三栋</p>
                 <i class="fa fa-angle-right"></i>
             </div>
-            <p>zzw 先生 15877712345</p>
+            <p>{{ user.username }} 先生 {{ user.phone }}</p>
         </div>
+        <h3>{{ business.businessName }}</h3>
 
-        <h3>万家饺子（软件园E18店）</h3>
         <!-- 订单明细部分 -->
         <div class="order-detailed">
-            <li>
+            <li
+                v-for="orderItem in order"
+                :key="orderItem.foodid"
+            >
                 <div class="order-detailed-left">
-                    <img src="../assets/img/sp01.png"/>
-                    <p>纯肉鲜肉（水饺） x 2</p>
+                    <img :src="orderItem.foodimg"/>
+                    <p>{{ orderItem.foodname }} x {{ orderItem.orderFoodNum }}</p>
                 </div>
-                <p>&#165;15</p>
-            </li>
-            <li>
-                <div class="order-detailed-left">
-                    <img src="../assets/img/sp02.png"/>
-                    <p>玉米鲜肉（水饺） x 1</p>
-                </div>
-                <p>&#165;16</p>
+                <p>￥{{ orderItem.foodprice }} / 份</p>
             </li>
         </div>
         <div class="order-deliveryfee">
             <p>配送费</p>
-            <p>&#165;3</p>
+            <p>￥{{ business.deliveryPrice }}</p>
         </div>
 
         <!-- 合计部分 -->
         <div class="total">
-            <div class="total-left">&#165;49</div>
+            <div class="total-left">￥{{ totalMoney }}</div>
             <div class="total-right" @click="$router.push('/payment')">去支付</div>
         </div>
     </div>
@@ -50,6 +46,20 @@
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Order',
+    data(){
+        return{
+            user: '',  //当前用户
+            order: [],  //订单
+            business: '', //商家
+            totalMoney: 0,  //总金额
+        }
+    },
+    created() {
+        this.user = JSON.parse(localStorage.getItem("userInfo")).data
+        this.order = JSON.parse(this.$route.query.foodList)
+        this.business = JSON.parse(this.$route.query.business)
+        this.totalMoney = parseFloat(JSON.parse(this.$route.query.totalMoney)) + parseFloat(this.business.deliveryPrice)
+    }
 }
 </script>
 
