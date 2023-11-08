@@ -4,10 +4,10 @@
             <i class="fa fa-home"></i>
             <p>首页</p>
         </div>
-        <div @click="$router.push('/discover')">
-            <i class="fa fa-compass"></i>
-            <p>发现</p>
-        </div>
+<!--        <div @click="$router.push('/discover')">-->
+<!--            <i class="fa fa-compass"></i>-->
+<!--            <p>发现</p>-->
+<!--        </div>-->
         <div @click="$router.push('/orderList')">
             <i class="fa fa-file-text"></i>
             <p>订单</p>

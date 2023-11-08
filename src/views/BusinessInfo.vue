@@ -128,14 +128,23 @@ export default {
         confirmOrder() {
             let foodList = this.foodListOfBusiness.filter(food => food.orderFoodNum > 0);
             console.log(foodList)
-            this.$router.push({
-                path: 'Order',
-                query: {
-                    foodList: JSON.stringify(foodList),
-                    business: JSON.stringify(this.business),
-                    totalMoney: JSON.stringify(this.totalMoney),
-                }
-            });
+            let user = localStorage.getItem("userInfo")
+            if(user === null){
+                this.$message.warning({
+                    message: "请先登录",
+                    duration: 800
+                })
+                this.$router.push('/login')
+            }else{
+                this.$router.push({
+                    path: 'Order',
+                    query: {
+                        foodList: JSON.stringify(foodList),
+                        business: JSON.stringify(this.business),
+                        totalMoney: JSON.stringify(this.totalMoney),
+                    }
+                });
+            }
         }
     }
 }
