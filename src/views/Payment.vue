@@ -1,155 +1,123 @@
 <template>
-  <div class="wrapper">
-    <!-- header部分 -->
-    <header>
-      <p>在线支付</p>
-    </header>
+    <div class="wrapper">
+        <!-- header部分 -->
+        <header>
+            <p>支付订单</p>
+        </header>
 
-    <!-- 订单信息部分 -->
-    <h3>订单信息：</h3>
-    <div class="order-info">
-      <p>
-        万家饺子（软件园E18店）
-        <i class="fa fa-caret-down" id="showBtn"></i>
-      </p>
-      <p>&#165;49</p>
+        <div class="total-money">
+            <h3>总金额</h3>
+        </div>
+
+        <!-- 支付方式部分 -->
+        <div class="payment-type">
+            <div class="payment-select">
+                <img src="../assets/img/alipay.png" />
+                <label>
+                    <input type="radio" name="payment" value="alipay" />
+                </label>
+            </div>
+            <div class="payment-select">
+                <img src="../assets/img/wechat.png" />
+                <label>
+                    <input type="radio" name="payment" value="wechat" />
+                </label>
+            </div>
+        </div>
+
+        <div class="payment-button">
+            <button>确认支付</button>
+        </div>
     </div>
-
-    <!-- 订单明细部分 -->
-    <div class="order-detailet" id="detailetBox">
-      <li>
-        <p>纯肉鲜肉（水饺） x 2</p>
-        <p>&#165;15</p>
-      </li>
-      <li>
-        <p>玉米鲜肉（水饺） x 1</p>
-        <p>&#165;16</p>
-      </li>
-      <li>
-        <p>配送费</p>
-        <p>&#165;3</p>
-      </li>
-    </div>
-
-    <!-- 支付方式部分 -->
-    <div class="payment-type">
-      <li>
-        <img src="../assets/img/alipay.png" />
-        <i class="fa fa-check-circle"></i>
-      </li>
-      <li>
-        <img src="../assets/img/wechat.png" />
-      </li>
-    </div>
-    <div class="payment-button">
-      <button>确认支付</button>
-    </div>
-
-    <!-- 空白div -->
-    <div>&nbsp;&nbsp;&nbsp;</div>
-
-    <!-- 底部 -->
-    <Footer></Footer>
-  </div>
 </template>
 
 <script>
-import Footer from '@/components/Footer'
-
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Payment',
-  components: {
-    Footer,
-  },
-}
+    // eslint-disable-next-line vue/multi-word-component-names
+    name: 'Payment',
+    data(){
+        return{
+
+        }
+    }
+};
 </script>
 
 <style scoped>
 .wrapper {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
 .wrapper header {
-  width: 100%;
-  height: 12vw;
-  background-color: #0097ff;
-  color: #fff;
-  font-size: 4.8vw;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 12vw;
+    background-color: #0097ff;
+    color: #fff;
+    font-size: 4.8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.wrapper h3 {
-  margin-top: 12vw;
-  box-sizing: border-box;
-  padding: 4vw 4vw 0;
-  font-size: 4vw;
-  font-weight: 300;
-  color: #999;
+
+.wrapper .total-money{
+    margin: 1vw 1vw;
+    text-align: center;
+    font-size: 6vw;
 }
-.wrapper .order-info {
-  box-sizing: border-box;
-  padding: 4vw;
-  font-size: 4vw;
-  color: #666;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.wrapper .total-money h3{
+    /*border: 1px red solid;*/
 }
-.wrapper .order-info p:last-child {
-  color: orangered;
-}
-.wrapper .order-detailet {
-  width: 100%;
-}
-.wrapper .order-detailet li {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 1vw 4vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.wrapper .order-detailet li p {
-  font-size: 3vw;
-  color: #666;
-}
+
 .wrapper .payment-type {
-  width: 100%;
+    width: 100%;
 }
-.wrapper .payment-type li {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 4vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+.wrapper .payment-select {
+    margin-bottom: 1vw;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+
+    position: relative;
 }
-.wrapper .payment-type li img {
-  width: 33vw;
-  height: 8.9vw;
+
+.wrapper .payment-select label{
+    position: absolute;
+    right: 5vw;
 }
-.wrapper .payment-type li .fa-check-circle {
-  font-size: 5vw;
-  color: #38ca73;
+
+.wrapper .payment-select img {
+    width: 150px;
 }
-.wrapper .payment-button {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 4vw;
+
+.wrapper .payment-select label input[type='radio'] {
+    order: 1;
+    margin-left: auto;
 }
-.wrapper .payment-button button {
-  width: 100%;
-  height: 10vw;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  background-color: #38ca73;
-  color: #fff;
+
+.payment-button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.payment-button button {
+    width: 100%;
+    height: 12vw;
+
+    font-size: 6vw;
+    border: none;
+    outline: none;
+    border-radius: 10vw;
+    background-color: #38ca73;
+    color: #fff;
 }
 </style>
