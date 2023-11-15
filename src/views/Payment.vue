@@ -6,21 +6,24 @@
         </header>
 
         <div class="total-money">
-            <h3>总金额</h3>
+            ￥{{ totalMoney }}
+        </div>
+        <div class="businessName">
+            {{ business.businessName }}
         </div>
 
         <!-- 支付方式部分 -->
         <div class="payment-type">
             <div class="payment-select">
-                <img src="../assets/img/alipay.png" />
+                <img src="../assets/img/alipay.png"/>
                 <label>
-                    <input type="radio" name="payment" value="alipay" />
+                    <input type="radio" name="payment" value="alipay" checked/>
                 </label>
             </div>
             <div class="payment-select">
-                <img src="../assets/img/wechat.png" />
+                <img src="../assets/img/wechat.png"/>
                 <label>
-                    <input type="radio" name="payment" value="wechat" />
+                    <input type="radio" name="payment" value="wechat"/>
                 </label>
             </div>
         </div>
@@ -35,10 +38,15 @@
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Payment',
-    data(){
-        return{
-
+    data() {
+        return {
+            totalMoney: 0,  //总金额
+            business: '', //商家
         }
+    },
+    created() {
+        this.business = JSON.parse(this.$route.query.business)
+        this.totalMoney = parseFloat(JSON.parse(this.$route.query.totalMoney))
     }
 };
 </script>
@@ -63,12 +71,20 @@ export default {
     align-items: center;
 }
 
-.wrapper .total-money{
-    margin: 1vw 1vw;
+.wrapper .total-money {
+    font-weight: bold;
+    margin: 5vw 0 1vw 0;
     text-align: center;
     font-size: 6vw;
 }
-.wrapper .total-money h3{
+.wrapper .businessName {
+    margin: 1vw 0 5vw 0;
+    text-align: center;
+    font-size: 3vw;
+    color: #8d9396;
+}
+
+.wrapper .total-money h3 {
     /*border: 1px red solid;*/
 }
 
@@ -77,16 +93,17 @@ export default {
 }
 
 .wrapper .payment-select {
-    margin-bottom: 1vw;
+    margin: 1vw 1vw 1vw 1vw;
     display: flex;
     align-items: center;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
 
     position: relative;
+    border-radius: 50px;
 }
 
-.wrapper .payment-select label{
+.wrapper .payment-select label {
     position: absolute;
     right: 5vw;
 }
@@ -95,10 +112,10 @@ export default {
     width: 150px;
 }
 
-.wrapper .payment-select label input[type='radio'] {
-    order: 1;
-    margin-left: auto;
-}
+/*.wrapper .payment-select label input[type='radio'] {*/
+/*    order: 1;*/
+/*    margin-left: auto;*/
+/*}*/
 
 .payment-button {
     width: 100%;

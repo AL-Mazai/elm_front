@@ -37,24 +37,9 @@
         <!-- 合计部分 -->
         <div class="total">
             <div class="total-left">合计 ￥{{ totalMoney }}</div>
-                        <div class="total-right" @click="$router.push('/payment')">去支付</div>
-<!--            <div class="total-right" @click="showPaymentWindow">提交订单</div>-->
+            <div class="total-right" @click="payOrder">支付订单</div>
         </div>
 
-        <!-- 支付窗口 -->
-        <el-dialog
-            v-model="showWindow"
-            width="80%"
-            @close="closePaymentWindow"
-        >
-            <!-- 窗口内容 -->
-            <div class="window-content">
-                <!-- 支付方式选择 -->
-                <!-- 其他支付相关内容 -->
-                <!-- 确认支付按钮 -->
-                <el-button type="primary" @click="pay">确认支付</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
@@ -69,7 +54,6 @@ export default {
             business: '', //商家
             totalMoney: 0,  //总金额
 
-            showWindow: false, // 控制支付窗口的显示与隐藏
         }
     },
     created() {
@@ -79,19 +63,15 @@ export default {
         this.totalMoney = parseFloat(JSON.parse(this.$route.query.totalMoney)) + parseFloat(this.business.deliveryPrice)
     },
     methods: {
-        showPaymentWindow() {
-            this.showWindow = true; // 显示支付窗口
-            console.log("@")
-        },
-        closePaymentWindow() {
-            this.showWindow = false; // 关闭支付窗口
-        },
-        pay() {
-            // 在此处编写支付逻辑
-            // 可以发送支付请求给后端，处理支付结果等
-            // 支付完成后可以关闭支付窗口，跳转到支付成功页面等
-            // 示例中直接关闭支付窗口
-            this.showWindow = false; // 关闭支付窗口
+        //支付订单
+        payOrder(){
+            this.$router.push({
+                path: 'Payment',
+                query: {
+                    business: JSON.stringify(this.business),
+                    totalMoney: JSON.stringify(this.totalMoney),
+                }
+            });
         }
     }
 }

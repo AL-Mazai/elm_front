@@ -35,7 +35,7 @@ const router = createRouter({
             },
         },
         {
-            path: '/payment',
+            path: '/Payment',
             name: 'Payment',
             component: (() => import('../views/Payment')),
             meta: {
