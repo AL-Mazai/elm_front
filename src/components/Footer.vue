@@ -8,7 +8,7 @@
 <!--            <i class="fa fa-compass"></i>-->
 <!--            <p>发现</p>-->
 <!--        </div>-->
-        <div @click="$router.push('/orderList')">
+        <div @click="$router.push('/HistoryOrder')">
             <i class="fa fa-file-text"></i>
             <p>订单</p>
         </div>

@@ -67,11 +67,11 @@
             </div>
             <div class="cart-right">
                 <!-- 不够起送费 -->
-                <div v-if="totalMoney < 15" class="cart-right-item">
+                <div v-if="totalMoney < 15" class="cart-right-item" style="background-color: #aaa;">
                     &#165;{{ business.starPrice }}起送
                 </div>
                 <!-- 达到起送费 -->
-                <div v-else class="cart-right-item" @click="confirmOrder">
+                <div v-else class="cart-right-item" @click="confirmOrder" style="background-color: #38ca73;">
                     去结算
                 </div>
             </div>
@@ -335,7 +335,6 @@ export default {
 .wrapper .cart .cart-right .cart-right-item {
     width: 100%;
     height: 100%;
-    background-color: #38ca73;
     color: #fff;
     font-size: 4.5vw;
     font-weight: 700;

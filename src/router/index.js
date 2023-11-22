@@ -27,9 +27,9 @@ const router = createRouter({
             component: (() => import('../views/Order')),
         },
         {
-            path: '/orderList',
-            name: 'OrderList',
-            component: () => import('../views/OrderList'),
+            path: '/HistoryOrder',
+            name: 'HistoryOrder',
+            component: () => import('../views/HistoryOrder'),
             meta: {
                 isLogin: true,
             },
