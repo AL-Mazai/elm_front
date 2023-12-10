@@ -64,12 +64,13 @@ export default {
     data() {
         return {
             businessListByType: [],
-            businessType: '',
+            businessType: {},
             titile: ''
         }
     },
     created() {
-        this.businessType = this.$route.query
+        this.businessType = this.$store.state.businessType
+        // this.businessType = this.$route.query
         console.log(this.businessType.typeName)
         this.getAllBusiness()
     },
@@ -84,11 +85,13 @@ export default {
         },
         //跳转到商家页面
         getBusinessInfo(business){
-            console.log(business)
-            this.$router.push({
-                name:'BusinessInfo',
-                query: business,
-            })
+            this.$store.commit('indexToBusinessInfo',business)
+            this.$router.push('/BusinessInfo')
+            // console.log(business)
+            // this.$router.push({
+            //     name:'BusinessInfo',
+            //     query: business,
+            // })
         },
     },
 }

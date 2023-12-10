@@ -96,8 +96,10 @@ export default {
         }
     },
     created() {
-        this.business = this.$route.query
-        // console.log(this.business)
+
+        // this.business = this.$route.query
+        this.business = this.$store.state.business
+        console.log(this.business)
         this.foodList()
     },
     methods: {

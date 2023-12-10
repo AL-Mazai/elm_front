@@ -27,6 +27,12 @@ app.config.globalProperties.axios = axios
 import router from './router'
 app.use(router)
 
+//配置vuex状态管理
+import store from './store'
+app.use(store)
+
+
+
 //启动程序
 app.mount('#app')
 

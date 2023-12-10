@@ -184,18 +184,22 @@ export default {
         },
         //跳转到商家页面
         getBusinessInfo(business){
+            this.$store.commit('indexToBusinessInfo',business)
+            this.$router.push('/BusinessInfo')
             // console.log(business)
-            this.$router.push({
-                name:'BusinessInfo',
-                query: business,
-            })
+            // this.$router.push({
+            //     name:'BusinessInfo',
+            //     query: business,
+            // })
         },
         //按类型跳转到商家列表
         getAllBusinessOfType(type){
-            this.$router.push({
-                name:'BusinessList',
-                query: type
-            })
+            this.$store.commit('indexToBusinessList',type)
+            this.$router.push('/BusinessList')
+            // this.$router.push({
+            //     name:'BusinessList',
+            //     query: type
+            // })
         }
     },
 }
