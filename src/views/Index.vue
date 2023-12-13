@@ -106,6 +106,7 @@
                     <div class="business-info-explain">
                         <div>{{ business.businessIntroduction }}</div>
                     </div>
+
                 </div>
             </li>
         </div>

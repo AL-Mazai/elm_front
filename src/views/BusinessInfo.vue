@@ -96,11 +96,7 @@ export default {
         }
     },
     created() {
-
-        // this.business = this.$route.query
-        // this.business = this.$store.state.business
         this.business = JSON.parse(sessionStorage.getItem("business"))
-        console.log(this.business)
         this.foodList()
     },
     methods: {
@@ -139,14 +135,17 @@ export default {
                 })
                 this.$router.push('/login')
             }else{
-                this.$router.push({
-                    path: 'Order',
-                    query: {
-                        foodList: JSON.stringify(foodList),
-                        business: JSON.stringify(this.business),
-                        totalMoney: JSON.stringify(this.totalMoney),
-                    }
-                });
+                let totalMoney = this.totalMoney + this.business.deliveryPrice
+                this.$store.commit("businessInfoToOrder", {foodList, totalMoney})
+                this.$router.push('/Order');
+                // this.$router.push({
+                //     path: 'Order',
+                //     query: {
+                //         foodList: JSON.stringify(foodList),
+                //         business: JSON.stringify(this.business),
+                //         totalMoney: JSON.stringify(this.totalMoney),
+                //     }
+                // });
             }
         }
     }

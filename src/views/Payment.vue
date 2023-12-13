@@ -40,13 +40,21 @@ export default {
     name: 'Payment',
     data() {
         return {
-            totalMoney: 0,  //总金额
-            business: '', //商家
+            // totalMoney: 0,  //总金额
+            // business: '', //商家
         }
     },
     created() {
-        this.business = JSON.parse(this.$route.query.business)
-        this.totalMoney = parseFloat(JSON.parse(this.$route.query.totalMoney))
+        // this.business = JSON.parse(sessionStorage.getItem("business"))
+        // this.totalMoney = JSON.parse(sessionStorage.getItem("totalMoney"))
+    },
+    computed:{
+        business(){
+            return JSON.parse(sessionStorage.getItem("business"))
+        },
+        totalMoney(){
+            return JSON.parse(sessionStorage.getItem("totalMoney"))
+        }
     }
 };
 </script>

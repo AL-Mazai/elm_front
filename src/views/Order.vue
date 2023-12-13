@@ -37,7 +37,7 @@
         <!-- 合计部分 -->
         <div class="total">
             <div class="total-left">合计 ￥{{ totalMoney }}</div>
-            <div class="total-right" @click="payOrder">支付订单</div>
+            <div class="total-right" @click="this.$router.push('/Payment')">支付订单</div>
         </div>
 
     </div>
@@ -50,30 +50,30 @@ export default {
     data() {
         return {
             user: '',  //当前用户
-            order: [],  //订单
-            business: '', //商家
-            totalMoney: 0,  //总金额
-
+            // order: [],  //订单
+            // business: '', //商家
+            // totalMoney: 0,  //总金额
         }
     },
     created() {
         this.user = JSON.parse(localStorage.getItem("userInfo")).data
-        this.order = JSON.parse(this.$route.query.foodList)
-        this.business = JSON.parse(this.$route.query.business)
-        this.totalMoney = parseFloat(JSON.parse(this.$route.query.totalMoney)) + parseFloat(this.business.deliveryPrice)
+        // this.order = JSON.parse(this.$route.query.foodList)
+        // this.order = JSON.parse(sessionStorage.getItem("foodList"))
+        // this.business = JSON.parse(sessionStorage.getItem("business"))
+        // this.totalMoney = parseFloat(JSON.parse(sessionStorage.getItem("totalMoney")))
     },
-    methods: {
-        //支付订单
-        payOrder(){
-            this.$router.push({
-                path: 'Payment',
-                query: {
-                    business: JSON.stringify(this.business),
-                    totalMoney: JSON.stringify(this.totalMoney),
-                }
-            });
+    computed: {
+        order(){
+            return JSON.parse(sessionStorage.getItem("foodList"))
+        },
+        business(){
+            return JSON.parse(sessionStorage.getItem("business"))
+        },
+        totalMoney(){
+            return parseFloat(JSON.parse(sessionStorage.getItem("totalMoney")))
         }
-    }
+    },
+    methods: {}
 }
 </script>
 
