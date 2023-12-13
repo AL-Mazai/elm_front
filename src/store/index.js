@@ -5,10 +5,6 @@ export default createStore({
         businessType: JSON.parse(sessionStorage.getItem("businessType")) || {},
         business: JSON.parse(sessionStorage.getItem("business")) || {},
     },
-    getters:{
-        businessType: state => state.businessType,
-        business: state => state.business
-    },
     mutations: {
         // 首页跳转商家列表
         indexToBusinessList(state, businessType) {

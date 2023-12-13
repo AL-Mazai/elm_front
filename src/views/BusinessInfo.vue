@@ -98,7 +98,8 @@ export default {
     created() {
 
         // this.business = this.$route.query
-        this.business = this.$store.state.business
+        // this.business = this.$store.state.business
+        this.business = JSON.parse(sessionStorage.getItem("business"))
         console.log(this.business)
         this.foodList()
     },

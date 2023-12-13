@@ -106,28 +106,6 @@
                     <div class="business-info-explain">
                         <div>{{ business.businessIntroduction }}</div>
                     </div>
-
-                    <!--                    <div class="business-info-promotion">-->
-                    <!--                        <div class="business-info-promotion-left">-->
-                    <!--                            <div class="business-info-promotion-left-incon">新</div>-->
-                    <!--                            <p>饿了么新用户首单立减9元</p>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="business-info-promotion-right">-->
-                    <!--                            <p>2个活动</p>-->
-                    <!--                            <i class="fa fa-caret-down"></i>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="business-info-promotion">-->
-                    <!--                        <div class="business-info-promotion-left">-->
-                    <!--                            <div-->
-                    <!--                                class="business-info-promotion-left-incon"-->
-                    <!--                                style="background-color: #f1884f"-->
-                    <!--                            >-->
-                    <!--                                特-->
-                    <!--                            </div>-->
-                    <!--                            <p>特价商品5元起</p>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
                 </div>
             </li>
         </div>

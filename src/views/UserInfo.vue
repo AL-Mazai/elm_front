@@ -121,7 +121,7 @@
         >
             <el-upload
                 class="avatar-uploader"
-                action="http://localhost:8081/user/upload"
+                action="http://localhost:10010/user/upload"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
