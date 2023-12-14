@@ -7,3 +7,12 @@ export function getOrderListWithDetail(){
         method: 'get',
     })
 }
+
+//保存订单
+export function saveOrder(orders){
+    return request({
+        url: '/orders/saveOrders',
+        method: 'post',
+        data: orders
+    })
+}

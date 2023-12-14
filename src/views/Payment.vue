@@ -29,12 +29,16 @@
         </div>
 
         <div class="payment-button">
-            <button>确认支付</button>
+            <button @click="addOrder()">确认支付</button>
         </div>
     </div>
 </template>
 
 <script>
+import {saveOrder} from "@/api/order";
+import {formatDate} from "@/utils/dateUtil";
+import {ElMessageBox} from 'element-plus';
+
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Payment',
@@ -45,15 +49,56 @@ export default {
         }
     },
     created() {
-        // this.business = JSON.parse(sessionStorage.getItem("business"))
-        // this.totalMoney = JSON.parse(sessionStorage.getItem("totalMoney"))
     },
-    computed:{
-        business(){
+    computed: {
+        business() {
             return JSON.parse(sessionStorage.getItem("business"))
         },
-        totalMoney(){
+        totalMoney() {
             return JSON.parse(sessionStorage.getItem("totalMoney"))
+        }
+    },
+    methods: {
+        //确认支付后将订单保存
+        addOrder() {
+            // 构建 orderDetailList 数组，包含 OrderDetail 对象
+            let orderDetailList = JSON.parse(sessionStorage.getItem("foodList")).map(food => {
+                return {
+                    foodName: food.foodname,
+                    foodid: food.foodid,
+                    quantity: food.orderFoodNum,
+                    foodImg: food.foodimg,
+                    foodPrice: food.foodprice
+                };
+            });
+            //保存订单信息
+            let orders = {
+                userid: JSON.parse(localStorage.getItem("userInfo")).data.userid,
+                businessid: JSON.parse(sessionStorage.getItem("business")).businessId,
+                ordertotal: sessionStorage.getItem("totalMoney"),
+                daid: JSON.parse(sessionStorage.getItem("orderAddress")).daid,
+                businessName: JSON.parse(sessionStorage.getItem("business")).businessName,
+                deliveryPrice: JSON.parse(sessionStorage.getItem("business")).deliveryPrice,
+                orderdate: formatDate(new Date()),
+                orderDetailList: orderDetailList
+            }
+            saveOrder(orders).then(() => {
+                ElMessageBox.confirm(
+                    '支付成功',
+                    '提示',
+                    {
+                        confirmButtonText: '再来一单',
+                        cancelButtonText: '返回首页',
+                        type: 'success',
+                    }
+                )
+                    .then(() => {
+                        this.$router.push('/BusinessInfo')
+                    })
+                    .catch(() => {
+                        this.$router.push('/')
+                    })
+            })
         }
     }
 };
@@ -85,6 +130,7 @@ export default {
     text-align: center;
     font-size: 6vw;
 }
+
 .wrapper .businessName {
     margin: 1vw 0 5vw 0;
     text-align: center;

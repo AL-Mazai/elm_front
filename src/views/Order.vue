@@ -5,14 +5,14 @@
             <p>确认订单</p>
         </header>
 
-        <!-- 订单信息部分 -->
+        <!-- 订单地址信息部分 -->
         <div class="order-info">
             <h5>订单配送至：</h5>
-            <div class="order-info-address">
-                <p>云南大学楸苑三栋</p>
+            <div class="order-info-address" @click="this.dialogVisible = true;">
+                <p>{{ orderAddress.address }}</p>
                 <i class="fa fa-angle-right"></i>
             </div>
-            <p>{{ user.username }} 先生 {{ user.phone }}</p>
+            <p>{{ orderAddress.contactname }} {{ orderAddress.contacttel }}</p>
         </div>
         <h3>{{ business.businessName }}</h3>
 
@@ -40,40 +40,70 @@
             <div class="total-right" @click="this.$router.push('/Payment')">支付订单</div>
         </div>
 
+        <!--  弹出的地址列表框 -->
+        <el-dialog v-model="dialogVisible" title="选择地址"
+                   @close="this.dialogVisible = false;"
+                   width="90%"
+        >
+            <!--地址列表 -->
+            <el-card v-for="address in addressList"
+                     :key="address.id"
+                     style="margin-bottom: 1vh" @click="selectAddress(address)"
+            >
+                <p>{{ address.address }}</p>
+                <span>{{ address.contactname }} {{ address.contacttel }} </span>
+            </el-card>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+import {
+    getAddressOfUser,
+}
+    from "@/api/address";
+
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Order',
     data() {
         return {
             user: '',  //当前用户
-            // order: [],  //订单
-            // business: '', //商家
-            // totalMoney: 0,  //总金额
+            orderAddress: '', //订单地址
+            addressList: [], //地址列表
+            dialogVisible: false
         }
     },
     created() {
         this.user = JSON.parse(localStorage.getItem("userInfo")).data
-        // this.order = JSON.parse(this.$route.query.foodList)
-        // this.order = JSON.parse(sessionStorage.getItem("foodList"))
-        // this.business = JSON.parse(sessionStorage.getItem("business"))
-        // this.totalMoney = parseFloat(JSON.parse(sessionStorage.getItem("totalMoney")))
+        //初始化地址列表
+        getAddressOfUser(this.user.userid).then((res) => {
+            this.addressList = res
+            console.log(this.addressList[0])
+            this.orderAddress = this.addressList[0]
+            sessionStorage.setItem("orderAddress", JSON.stringify(res[0]))
+        })
+
     },
     computed: {
-        order(){
+        order() {
             return JSON.parse(sessionStorage.getItem("foodList"))
         },
-        business(){
+        business() {
             return JSON.parse(sessionStorage.getItem("business"))
         },
-        totalMoney(){
+        totalMoney() {
             return parseFloat(JSON.parse(sessionStorage.getItem("totalMoney")))
         }
     },
-    methods: {}
+    methods: {
+        selectAddress(address) {
+            this.orderAddress = address
+            this.dialogVisible = false
+            sessionStorage.setItem("orderAddress", JSON.stringify(address))
+            // console.log(address)
+        }
+    }
 }
 </script>
 

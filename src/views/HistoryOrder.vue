@@ -2,7 +2,7 @@
     <div class="wrapper">
         <!-- header部分 -->
         <header>
-            <p>我的订单</p>
+            <p>历史订单</p>
         </header>
         <div style="margin-top: 12vw"></div>
         <div>
