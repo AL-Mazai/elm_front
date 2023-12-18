@@ -34,11 +34,11 @@ export function getBusinessInfo(businessId){
     })
 }
 
-//获取商家的食物列表
-export function  getAllFood(businessId){
-    return request({
-        url: '/food/foodList',
-        method: 'get',
-        params: {businessId}
-    })
-}
+// //获取商家的食物列表
+// export function  getAllFood(businessId){
+//     return request({
+//         url: '/food/foodList',
+//         method: 'get',
+//         params: {businessId}
+//     })
+// }

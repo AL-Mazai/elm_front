@@ -154,6 +154,7 @@ export default {
         //获取商家列表(按销量最高)
         getBusinessList(sortWay) {
             getAllBusiness(sortWay).then((res) => {
+                console.log(res)
                 // 将带有一位小数的数字字符串转为数字
                 this.businessList = res.map((business) => ({
                     ...business,

@@ -71,9 +71,9 @@ export default {
     created() {
         // this.businessType = this.$store.state.businessType
         this.businessType = JSON.parse(sessionStorage.getItem("businessType"))
-        console.log(sessionStorage.getItem("businessType"))
+        // console.log(sessionStorage.getItem("businessType"))
         // this.businessType = this.$route.query
-        console.log(this.businessType.typeName)
+        // console.log(this.businessType.typeName)
         this.getAllBusiness()
     },
     methods: {
@@ -81,7 +81,7 @@ export default {
         getAllBusiness() {
             let typeId = this.businessType.id
             getAllBusinessByType(typeId).then((res) => {
-                console.log(res)
+                // console.log(res)
                 this.businessListByType = res
             })
         },

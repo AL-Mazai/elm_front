@@ -18,7 +18,7 @@
         </div>
 
         <!--没有食物-->
-        <div v-if="foodListOfBusiness == ''">
+        <div v-if="business.foodList == ''">
             <div class="no-food">
                 该商家还没有食物
             </div>
@@ -26,7 +26,7 @@
         <!-- 食品列表部分 -->
         <div class="food">
             <li
-                v-for="food in foodListOfBusiness"
+                v-for="food in business.foodList"
                 :key="food.foodid"
             >
                 <!--食物信息-->
@@ -81,15 +81,14 @@
 
 <script>
 
-import {getAllFood} from "@/api/business";
+// import {getAllFood} from "@/api/business";
 
 export default {
     name: 'BusinessInfo',
     data() {
         return {
             business: {},  //商家信息
-            foodListOfBusiness: [], //商家食品列表
-
+            // business.foodList: [], //商家食品列表
             orderFoodTotalNum: 0, //下单的食品总数
             totalMoney: 0,  //总金额
             orderList: [],  //下单列表
@@ -97,17 +96,18 @@ export default {
     },
     created() {
         this.business = JSON.parse(sessionStorage.getItem("business"))
+
+        console.log(this.business.foodList)
         this.foodList()
     },
     methods: {
-        //获取食品列表
-        foodList() {
-            let businessId = this.business.businessId
-            getAllFood(businessId).then((res) => {
-                this.foodListOfBusiness = res
-                // console.log(res)
-            })
-        },
+        // //获取食品列表
+        // foodList() {
+        //     let businessId = this.business.businessId
+        //     getAllFood(businessId).then((res) => {
+        //         this.business.foodList = res
+        //     })
+        // },
         /*************下单******************/
         addOrderFoodNum(food) {
             food.orderFoodNum += 1
@@ -125,7 +125,7 @@ export default {
         },
         //跳转到确认订单页面
         confirmOrder() {
-            let foodList = this.foodListOfBusiness.filter(food => food.orderFoodNum > 0);
+            let foodList = this.business.foodList.filter(food => food.orderFoodNum > 0);
             console.log(foodList)
             let user = localStorage.getItem("userInfo")
             if(user === null){
