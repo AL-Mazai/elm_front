@@ -62,6 +62,7 @@ import {
     getAddressOfUser,
 }
     from "@/api/address";
+import {ElMessageBox} from "element-plus";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -79,9 +80,26 @@ export default {
         //初始化地址列表
         getAddressOfUser(this.user.userid).then((res) => {
             this.addressList = res
-            console.log(this.addressList[0])
-            this.orderAddress = this.addressList[0]
-            sessionStorage.setItem("orderAddress", JSON.stringify(res[0]))
+            // console.log(this.addressList[0])
+            if(this.addressList.length != 0){
+                this.orderAddress = this.addressList[0]
+                sessionStorage.setItem("orderAddress", JSON.stringify(res[0]))
+            }else {
+                ElMessageBox.confirm(
+                    '请先设置您的地址',
+                    '提示',
+                    {
+                        confirmButtonText: '去设置',
+                        cancelButtonText: '取消订单',
+                    }
+                )
+                    .then(() => {
+                        this.$router.push('/address')
+                    })
+                    .catch(() => {
+                        this.$router.push('/')
+                    })
+            }
         })
 
     },

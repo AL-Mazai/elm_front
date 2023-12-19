@@ -98,7 +98,7 @@ export default {
         this.business = JSON.parse(sessionStorage.getItem("business"))
 
         console.log(this.business.foodList)
-        this.foodList()
+        // this.foodList()
     },
     methods: {
         // //获取食品列表
