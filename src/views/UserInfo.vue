@@ -169,7 +169,7 @@ export default {
             logoutDialogVisible: false, //退出登录弹窗
             editUserInfoVisible: false, //编辑用户信息弹窗
             //默认头像链接
-            defaultAvatar: 'http://s0k2fu3j0.hn-bkt.clouddn.com/image/1.png',
+            defaultAvatar: 'http://qny.cai142857.cn/2023/09/25/492f03c9c7d249198ab364e406f2a5c6.png',
         }
     },
     created() {
@@ -276,6 +276,7 @@ export default {
         },
         //头像加载失败
         handleAvatarError() {
+            alert("头像已失效")
             this.userInfo.userimg = this.defaultAvatar
         },
         //将电话号码一部分替换为*

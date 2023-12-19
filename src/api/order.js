@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 
 //订单列表
-export function getOrderListWithDetail(){
+export function getOrderListWithDetail(userId){
     return request({
         url: '/orders/getAllOrders',
         method: 'get',
+        params:{userId}
     })
 }
 

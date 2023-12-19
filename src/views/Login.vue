@@ -5,31 +5,31 @@
             <p class="title-font">用户登录</p>
         </div>
         <div class="login-box">
-            <div class="select-login">
-                <el-radio-group v-model="loginMethod">
-                    <el-radio-button label="username">用户名登录</el-radio-button>
-                    <el-radio-button label="phone">验证码登录</el-radio-button>
-                </el-radio-group>
-            </div>
+<!--            <div class="select-login">-->
+<!--                <el-radio-group v-model="loginMethod">-->
+<!--&lt;!&ndash;                    <el-radio-button label="username">用户名登录</el-radio-button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <el-radio-button label="phone">验证码登录</el-radio-button>&ndash;&gt;-->
+<!--                </el-radio-group>-->
+<!--            </div>-->
 
             <el-form
                 :model="loginForm"
                 :rules="rules"
                 ref="loginForm"
                 label-width="80px"
-                style="margin-right: 10vw"
+                style="margin: 5vw 10vw 0 0"
             >
-                <el-form-item
-                    label="手机号码"
-                    prop="phone"
-                    v-if="loginMethod === 'phone'"
-                >
-                    <el-input
-                        v-model="loginForm.phone"
-                        type="tel"
-                        placeholder="请输入手机号码"
-                    ></el-input>
-                </el-form-item>
+<!--                <el-form-item-->
+<!--                    label="手机号码"-->
+<!--                    prop="phone"-->
+<!--                    v-if="loginMethod === 'phone'"-->
+<!--                >-->
+<!--                    <el-input-->
+<!--                        v-model="loginForm.phone"-->
+<!--                        type="tel"-->
+<!--                        placeholder="请输入手机号码"-->
+<!--                    ></el-input>-->
+<!--                </el-form-item>-->
                 <el-form-item
                     label="用户名"
                     prop="username"
@@ -170,6 +170,10 @@ export default {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
     background-color: #fff;
+
+    width: 85%;
+
+    //border: 1px red solid;
 }
 
 .select-login {

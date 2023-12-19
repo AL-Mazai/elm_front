@@ -94,7 +94,7 @@ export default {
                             username: this.registerForm.username,
                             password: this.registerForm.password,
                             usersex: this.registerForm.usersex,
-                            userimg: "http://qny.cai142857.cn/a66075beb77f417893ee7babebf7d7c4.png" //默认头像
+                            userimg: 'http://qny.cai142857.cn/2023/09/25/492f03c9c7d249198ab364e406f2a5c6.png' //默认头像
                         }
                         //后端请求
                         userRegister(userInfo).then((res) => {

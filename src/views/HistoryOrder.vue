@@ -5,7 +5,8 @@
             <p>历史订单</p>
         </header>
         <div style="margin-top: 12vw"></div>
-        <div>
+
+        <div v-if="orders.length !== 0">
             <div
                 class="order"
                 v-for="order in orders"
@@ -18,7 +19,8 @@
                             <i class="fa fa-caret-right"></i>
                         </p>
                         <div class="order-info-right">
-                            <span>合计</span><p>￥{{ order.ordertotal }}</p>
+                            <span>合计</span>
+                            <p>￥{{ order.ordertotal }}</p>
                         </div>
                     </div>
                     <div class="order-detailet">
@@ -31,12 +33,16 @@
                         </div>
                         <div>
                             <span>配送费</span>
-                            <span>￥{{order.deliveryPrice}}</span>
+                            <span>￥{{ order.deliveryPrice }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div v-else class="no-orders">
+            <h1>
+                没有订单
+            </h1>
         </div>
 
         <!-- 空白div -->
@@ -50,6 +56,7 @@
 <script>
 import Footer from '@/components/Footer'
 import {getOrderListWithDetail} from "@/api/order";
+import {getExpire} from "@/utils/localStorage";
 
 export default {
     name: 'HistoryOrder',
@@ -60,11 +67,12 @@ export default {
         }
     },
     created() {
-        this.orderList()
+        let userId = getExpire("userInfo").userid
+        this.orderList(userId)
     },
     methods: {
-        orderList() {
-            getOrderListWithDetail().then((res) => {
+        orderList(userId) {
+            getOrderListWithDetail(userId).then((res) => {
                 console.log(res)
                 this.orders = res
             })
@@ -111,6 +119,18 @@ export default {
     padding: 0;
 }
 
+.no-orders{
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    /*height: 80vh; !* 设置高度为视口高度，使元素占满整个屏幕 *!*/
+
+    margin-top: 40vh;
+
+    font-size: 30px;
+    color: #d2d2c8;
+}
+
 .order {
     background-color: #fff;
     border-radius: 5px;
@@ -143,7 +163,8 @@ export default {
     display: flex;
     align-items: center;
 }
-.order-info-right span{
+
+.order-info-right span {
     font-size: 12px;
     color: #666;
 }
