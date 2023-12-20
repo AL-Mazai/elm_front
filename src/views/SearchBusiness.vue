@@ -7,9 +7,9 @@
         
         <!--商家列表-->
         <div class="business">
-            <li v-for="business in businessListByName" :key="business.businessId">
+            <li v-for="business in businessListByName" :key="business.businessId" @click="getBusinessInfo(business)">
                 <div class="business-img">
-                    <img :src="business.businessImg" @click="$router.push('/businessInfo')"/>
+                    <img :src="business.businessImg"/>
                 </div>
                 <div class="business-info">
                     <h3>{{ business.businessName }}</h3>
@@ -61,7 +61,11 @@ export default {
         this.businessListByName = JSON.parse(sessionStorage.getItem("searchBusiness"))
     },
     methods: {
-        
+        //跳转到商家页面
+        getBusinessInfo(business){
+            this.$store.commit('indexToBusinessInfo',business)
+            this.$router.push('/BusinessInfo')
+        },
     },
 }
 </script>

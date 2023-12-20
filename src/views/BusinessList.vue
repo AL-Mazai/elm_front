@@ -17,7 +17,7 @@
                 @click="getBusinessInfo(business)"
             >
                 <div class="business-img">
-                    <img :src="business.businessImg" @click="$router.push('/businessInfo')"/>
+                    <img :src="business.businessImg"/>
                 </div>
                 <div class="business-info">
                     <h3>{{ business.businessName }}</h3>
