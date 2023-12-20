@@ -4,6 +4,7 @@ export default createStore({
     state: {
         businessType: JSON.parse(sessionStorage.getItem("businessType")) || {},
         business: JSON.parse(sessionStorage.getItem("business")) || {},
+        searchBusiness: JSON.parse(sessionStorage.getItem("searchBusiness")) || {},
         foodList: JSON.parse(sessionStorage.getItem("foodList")) || {},
         totalMoney: JSON.parse(sessionStorage.getItem("totalMoney")) || {},
     },
@@ -25,6 +26,11 @@ export default createStore({
             sessionStorage.setItem("foodList", JSON.stringify(foodListAndTotalMoney.foodList))
             sessionStorage.setItem("totalMoney", JSON.stringify(foodListAndTotalMoney.totalMoney))
         },
+        //首页跳转搜索到的商家信息页面
+        indexToSearchBusiness(state, searchBusiness){
+            state.searchBusiness = searchBusiness
+            sessionStorage.setItem("searchBusiness", JSON.stringify(searchBusiness))
+        }
     },
     actions: {
     },

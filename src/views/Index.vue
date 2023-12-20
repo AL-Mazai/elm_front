@@ -16,8 +16,8 @@
         <!-- 搜索框 -->
         <div class="search">
             <div class="search-input">
-                <input type="text" placeholder="请输入要查询的商品..."/>
-                <button type="submit" @click="searchPro()">搜索</button>
+                <input v-model="searchText" type="text" placeholder="请输入商家名称..."/>
+                <button type="submit" @click="searchBusiness(searchText)">搜索</button>
             </div>
         </div>
 
@@ -121,7 +121,7 @@
 
 <script>
 import Footer from '../components/Footer'
-import {getAllType, getAllBusiness} from "@/api/business";
+import {getAllType, getAllBusiness, getAllBusinessByName} from "@/api/business";
 
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
@@ -134,6 +134,7 @@ export default {
             businessTypeList: [], //商家类型列表
             businessList: [],  //商家列表
             sortWay: 1,  //商家列表排序方法，默认为按销量排序
+            searchText:'',
         }
     },
     created() {
@@ -141,14 +142,21 @@ export default {
         this.getBusinessList(this.sortWay)
     },
     methods: {
-        searchPro() {
-            alert('hello')
+        //按名称搜索商家列表
+        searchBusiness(businessName) {
+            console.log(businessName)
+            getAllBusinessByName(businessName).then((res) => {
+                // console.log(res)
+                this.$store.commit('indexToSearchBusiness',res)
+                this.$router.push('/SearchBusiness')
+            })
         },
         //获取商家类型列表
         getAllBusinessType() {
             getAllType().then((res) => {
                 // console.log('@', res)
                 this.businessTypeList = res
+                this.searchText = ''
             })
         },
         //获取商家列表(按销量最高)

@@ -25,6 +25,14 @@ export function getAllBusinessByType(typeId){
     })
 }
 
+export function getAllBusinessByName(businessName){
+    return request({
+        url:'/business/getAllBusinessByName',
+        method: 'get',
+        params: {businessName}
+    })
+}
+
 //获取商家信息
 export function getBusinessInfo(businessId){
     return request({

@@ -17,6 +17,11 @@ const router = createRouter({
             component: (() => import('../views/BusinessList')),
         },
         {
+            path: '/SearchBusiness',
+            name: 'SearchBusiness',
+            component: (() => import('../views/SearchBusiness.vue')),
+        },
+        {
             path: '/BusinessInfo',
             name: 'BusinessInfo',
             component: (() => import('../views/BusinessInfo')),
